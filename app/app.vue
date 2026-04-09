@@ -2,12 +2,12 @@
   <div>
     <!-- <NuxtRouteAnnouncer />
     <NuxtWelcome /> -->
-    <div class="text-red-500">Test</div>
+    <div class="text-red-500 bg-gray-500">Test</div>
   </div>
 </template>
 
-<style>
+<script setup lang="ts">
 
-@import 'tailwindcss';
+import '../assets/css/index.css';
 
-</style>
+</script>
