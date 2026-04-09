@@ -5,3 +5,9 @@
     <div class="text-red-500">Test</div>
   </div>
 </template>
+
+<style>
+
+@import 'tailwindcss';
+
+</style>
