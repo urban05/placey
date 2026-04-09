@@ -13,6 +13,7 @@
     "@nuxt/eslint": "1.15.2",
     "@nuxt/icon": "2.2.1",
     "@tailwindcss/vite": "^4.2.2",
+    "maplibre-gl": "^5.22.0",
     "nuxt": "^4.4.2",
     "pg": "^8.20.0",
     "tailwindcss": "^4.2.2",
