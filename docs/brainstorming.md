@@ -9,5 +9,19 @@ The plattform allows moderators to verfiy places and remove entries and comments
 
 - collect places like trading cards and duell with other users.
 - own map design.
-- 
 
+## Architecture
+
+Framework:
+- progessive web app in Nuxt v4
+  - based on vite
+    - tailwind css as plugin in vite
+Nuxt v4 modules:
+- nuxt-maplibre, based on maplibre, a wrapper for openstreetmaps
+
+## Requirements
+
+- NodeJs
+- PNPM
+- Nuxt
+- Tailwind CSS
