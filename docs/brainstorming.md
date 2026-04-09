@@ -13,11 +13,27 @@ The plattform allows moderators to verfiy places and remove entries and comments
 ## Architecture
 
 Framework:
-- progessive web app in Nuxt v4
+
+- Nuxt v4
   - based on vite
-    - tailwind css as plugin in vite
+
+Vite Plugins:
+
+- tailwind css
+
 Nuxt v4 modules:
+
 - nuxt-maplibre, based on maplibre, a wrapper for openstreetmaps
+- @nuxt/eslint
+- @nuxt/icon
+
+npm dependcies:
+
+- pg connector for postgres
+
+Database:
+
+- PostgreSQL
 
 ## Requirements
 
