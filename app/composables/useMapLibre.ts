@@ -1,4 +1,4 @@
-import maplibre, { Map, Marker, type MapOptions, type MarkerOptions } from 'maplibre-gl'
+import maplibre, { Map, Marker, Popup, type MapOptions, type MarkerOptions, type PopupOptions } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 export function useMapLibre() {
@@ -10,9 +10,14 @@ export function useMapLibre() {
     return new maplibre.Marker(options)
   }
 
+  function createPopup(options: PopupOptions): Popup {
+    return new maplibre.Popup(options)
+  }
+
   return {
     maplibre,
     createMap,
-    createMarker
+    createMarker,
+    createPopup
   }
 }

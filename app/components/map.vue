@@ -33,11 +33,12 @@ onMounted(() => {
   });
 
   for (const place of data.value!) {
+    const placePopup = maplibre.createPopup({offset: 25}).setHTML(`<h1>${place.name}</h1><p>--------</p><p>${place.description}</p><p>--------</p><p>${place.address}</p>`);
     const placeMarker = maplibre.createMarker({
       element: markerRefs.value[place.id]!,
       anchor: "bottom",
     });
-    placeMarker.setLngLat([place.longitude, place.latitude]).addTo(map);
+    placeMarker.setLngLat([place.longitude, place.latitude]).setPopup(placePopup).addTo(map);
   }
 });
 </script>
@@ -50,7 +51,7 @@ onMounted(() => {
     >
       <Icon
         :name="place.icon"
-        class="drop-shadow-lg drop-shadow-black"
+        class="drop-shadow-lg drop-shadow-black cursor-pointer"
         :size="40 * 1.2 ** (zoom - 13)"
       />
     </div>
