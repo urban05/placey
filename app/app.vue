@@ -9,6 +9,6 @@
 
 <script setup lang="ts">
 
-import '../assets/css/index.css';
+import '@/assets/css/index.css';
 
 </script>
