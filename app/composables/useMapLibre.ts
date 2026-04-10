@@ -1,4 +1,4 @@
-import maplibre, { Map, Marker, type MapOptions } from 'maplibre-gl'
+import maplibre, { Map, Marker, type MapOptions, type MarkerOptions } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 export function useMapLibre() {
@@ -6,8 +6,8 @@ export function useMapLibre() {
     return new maplibre.Map(options)
   }
 
-  function createMarker(): Marker {
-    return new maplibre.Marker()
+  function createMarker(options: MarkerOptions): Marker {
+    return new maplibre.Marker(options)
   }
 
   return {
