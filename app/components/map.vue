@@ -43,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="map" style="height: 500px; width: 100%">
+  <div id="map" style="height: 100vh; width: 100%">
     <div
       v-for="place in data"
       :ref="(el) => (markerRefs[place.id] = el as HTMLElement)"
