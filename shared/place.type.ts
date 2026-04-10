@@ -1,10 +1,12 @@
+import type { UUID } from "crypto";
+
 export interface Place {
-  id: number;
+  id: UUID;
   name: string;
   icon: string;
   verified: boolean;
   address: string;
   description: string;
   latitude: number;
-  longtitude: number;
+  longitude: number;
 }

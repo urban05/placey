@@ -1,36 +1,58 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import mapConfig from '@/assets/map_config.json';
-
-import { useGeolocation } from '@vueuse/core';
+import { onMounted } from "vue";
+import mapConfig from "@/assets/map_config.json";
+import { useGeolocation } from "@vueuse/core";
 
 const { coords } = useGeolocation();
 
+const { data, refresh } = await useFetch(
+  () => `/api/places?latitude=10.003277&longitude=53.499555`,
+);
+
 const maplibre = useMapLibre();
 
-const markerElement = useTemplateRef('marker');
+const markerRefs = ref<Record<string, HTMLElement | null>>({});
+
+const zoom = ref(13);
 
 onMounted(() => {
   const map = maplibre.createMap({
-    container: 'map',
+    container: "map",
     style: mapConfig as any,
     center: [10.003277, 53.499555],
-    zoom: 13
-  })
+    zoom: 13,
+  });
 
-  const marker = maplibre.createMarker({ element: markerElement.value!, anchor: 'bottom' });
-  marker.setLngLat([10.003277, 53.499555]).addTo(map)
+  map.on("zoom", () => {
+    zoom.value = map.getZoom()!;
+  });
 
   watch(coords, (newCoords) => {
     map.setCenter([newCoords.longitude, newCoords.latitude]);
-  })
-})
+    refresh();
+  });
+
+  for (const place of data.value!) {
+    const placeMarker = maplibre.createMarker({
+      element: markerRefs.value[place.id]!,
+      anchor: "bottom",
+    });
+    placeMarker.setLngLat([place.longitude, place.latitude]).addTo(map);
+  }
+});
 </script>
 
 <template>
-  <div id="map" style="height: 500px; width: 100%;">
-    <div ref="marker">
-      <Icon name="twemoji:school" class="text-6xl drop-shadow-lg drop-shadow-black" />
+  <div id="map" style="height: 500px; width: 100%">
+    <div
+      v-for="place in data"
+      :ref="(el) => (markerRefs[place.id] = el as HTMLElement)"
+    >
+      <Icon
+        :name="place.icon"
+        class="drop-shadow-lg drop-shadow-black"
+        :size="40 * 1.2 ** (zoom - 13)"
+      />
     </div>
   </div>
 </template>
