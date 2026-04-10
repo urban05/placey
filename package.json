@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "migrate": "node-pg-migrate -j ts"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.2",
@@ -17,9 +18,12 @@
     "@vueuse/nuxt": "14.2.1",
     "maplibre-gl": "^5.22.0",
     "nuxt": "^4.4.2",
-    "pg": "^8.20.0",
+    "postgres": "^3.4.9",
     "tailwindcss": "^4.2.2",
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
+  },
+  "devDependencies": {
+    "node-pg-migrate": "^8.0.4"
   }
 }
