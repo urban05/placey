@@ -9,8 +9,6 @@ export default defineEventHandler(async (event) => {
     longlitude: number;
   } = await getQuery(event);
 
-  console.log(query);
-
   const sql = usePostgres();
   const result: Place[] = await sql`
         SELECT id, name, icon, verified, address, description, ST_Y(cords::geometry) AS latitude, ST_X(cords::geometry) AS longtitude
