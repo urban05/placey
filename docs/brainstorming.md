@@ -39,7 +39,7 @@ Database:
 Map:
 
 - versatiles for vector tiles
-- iconify/glyphs-twemoji for icons
+- iconify/glyphs-twemoji for icons, CC-BY 4.0
 
 ## Requirements
 
