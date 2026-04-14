@@ -11,100 +11,140 @@
       <div>Heading: {{ location.heading }}°</div>
     </div>
 
-    <div class="relative w-40 h-40 mx-auto rounded-full border flex items-center justify-center"
-      :class="enabled ? 'bg-gray-100' : 'bg-gray-200 opacity-50'">
-      <div class="w-16 h-16 bg-blue-500 rounded-full transition-transform duration-100" :style="stickStyle"></div>
+    <div
+      class="relative w-40 h-40 mx-auto rounded-full border flex items-center justify-center"
+      :class="enabled ? 'bg-gray-100' : 'bg-gray-200 opacity-50'"
+    >
+      <div
+        class="w-16 h-16 bg-blue-500 rounded-full transition-transform duration-100"
+        :style="stickStyle"
+      ></div>
     </div>
   </div>
 </template>
 
-<script setup>
-const enabled = ref(true)
-const x = ref(0)
-const y = ref(0)
+<script setup lang="ts">
+import { set } from "@vueuse/core";
 
-const location = useUserLocation()
+const location = useUserLocation();
 
-const step = 40
-const moveSpeed = 0.0005
-const rotateStep = 5
+const enabled = ref(true);
+const px = ref(false);
+const nx = ref(false);
+const py = ref(false);
+const ny = ref(false);
 
-const movementKeys = ['w', 'a', 's', 'd']
-const rotateKeys = ['q', 'e']
+const x = computed(() => (px.value ? 1 : 0) - (nx.value ? 1 : 0));
+const y = computed(() => (py.value ? 1 : 0) - (ny.value ? 1 : 0));
 
-const degToRad = (deg) => deg * (Math.PI / 180)
+const vectorScale = computed(() => {
+  const length = Math.sqrt(x.value ** 2 + y.value ** 2);
+  return length > 0 ? 1 / length : 0;
+});
 
-const moveForward = (dir = 1) => {
-  const rad = degToRad(location.value.heading)
-  location.value.latitude += Math.cos(rad) * moveSpeed * dir
-  location.value.longitude += Math.sin(rad) * moveSpeed * dir
+const step = 40;
+const moveSpeed = 0.0005;
+const rotateStep = 5;
+
+const movementKeys = ["w", "a", "s", "d"];
+const rotateKeys = ["q", "e"];
+
+const degToRad = (deg: number) => deg * (Math.PI / 180);
+
+let lastTime = 0;
+function move(time: number) {
+  const delta = (time - lastTime) / 100;
+  lastTime = time;
+
+  const forwardRad = degToRad(location.value.heading);
+  location.value.latitude -=
+    Math.cos(forwardRad) * moveSpeed * y.value * vectorScale.value * delta;
+  location.value.longitude -=
+    Math.sin(forwardRad) * moveSpeed * y.value * vectorScale.value * delta;
+  const sideRad = degToRad(location.value.heading + 90);
+  location.value.latitude +=
+    Math.cos(sideRad) * moveSpeed * x.value * vectorScale.value * delta;
+  location.value.longitude +=
+    Math.sin(sideRad) * moveSpeed * x.value * vectorScale.value * delta;
+
+  if (enabled.value) requestAnimationFrame(move);
 }
 
-const moveSide = (dir = 1) => {
-  const rad = degToRad(location.value.heading + 90)
-  location.value.latitude += Math.cos(rad) * moveSpeed * dir
-  location.value.longitude += Math.sin(rad) * moveSpeed * dir
-}
+watch(enabled, (newVal) => {
+  if (newVal) {
+    requestAnimationFrame(move);
+  }
+});
 
-const handleKeyDown = (e) => {
-  if (!enabled.value) return
+function handleKeyDown(e: KeyboardEvent) {
+  if (!enabled.value) return;
 
-  const key = e.key.toLowerCase()
+  const key = e.key.toLowerCase();
 
   if ([...movementKeys, ...rotateKeys].includes(key)) {
-    e.preventDefault()
+    e.preventDefault();
   }
 
   switch (key) {
-    case 'w':
-      y.value = -step
-      moveForward(1)
-      break
-    case 's':
-      y.value = step
-      moveForward(-1)
-      break
-    case 'a':
-      x.value = -step
-      moveSide(-1)
-      break
-    case 'd':
-      x.value = step
-      moveSide(1)
-      break
-    case 'q':
-      location.value.heading = (location.value.heading - rotateStep + 360) % 360
-      break
-    case 'e':
-      location.value.heading = (location.value.heading + rotateStep) % 360
-      break
+    case "w":
+      ny.value = true;
+      break;
+    case "s":
+      py.value = true;
+      break;
+    case "a":
+      nx.value = true;
+      break;
+    case "d":
+      px.value = true;
+      break;
+    case "q":
+      location.value.heading =
+        (location.value.heading - rotateStep + 360) % 360;
+      break;
+    case "e":
+      location.value.heading = (location.value.heading + rotateStep) % 360;
+      break;
   }
 }
 
-const handleKeyUp = (e) => {
-  if (!enabled.value) return
+function handleKeyUp(e: KeyboardEvent) {
+  if (!enabled.value) return;
 
-  const key = e.key.toLowerCase()
+  const key = e.key.toLowerCase();
 
   if ([...movementKeys, ...rotateKeys].includes(key)) {
-    e.preventDefault()
+    e.preventDefault();
   }
 
-  x.value = 0
-  y.value = 0
+  switch (key) {
+    case "w":
+      ny.value = false;
+      break;
+    case "s":
+      py.value = false;
+      break;
+    case "a":
+      nx.value = false;
+      break;
+    case "d":
+      px.value = false;
+      break;
+  }
 }
 
 onMounted(() => {
-  window.addEventListener('keydown', handleKeyDown, { passive: false })
-  window.addEventListener('keyup', handleKeyUp, { passive: false })
-})
+  window.addEventListener("keydown", handleKeyDown, { passive: false });
+  window.addEventListener("keyup", handleKeyUp, { passive: false });
+  requestAnimationFrame(move);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyDown)
-  window.removeEventListener('keyup', handleKeyUp)
-})
+  window.removeEventListener("keydown", handleKeyDown);
+  window.removeEventListener("keyup", handleKeyUp);
+});
 
 const stickStyle = computed(() => ({
-  transform: `translate(${x.value}px, ${y.value}px)`
-}))
+  transform: `translate(${x.value * vectorScale.value * step}px, ${y.value * vectorScale.value * step}px)`,
+}));
 </script>
