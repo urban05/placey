@@ -20,4 +20,4 @@ VALUES
    
    ('82dbad2f-af27-4461-9548-16a8653eb0cd', 'Kreuzkirche Kirchdorf', 'Wilhelmsburger Kirche mit diversen Angeboten, sowohl für Kinder und Jugendliche als auch für Erwachsene.', ST_MakePoint(10.0110426, 53.5002946), 'twemoji:church', true, 'Jungnickelstraße 21, 21109 Hamburg'),
    
-   ('2ddcb4d1-626a-42d8-a46f-1cf965a02f20', 'Berufliche Schule ITECH Elbinsel Wilhelmsburg', 'Inklusive Berufsschule auf der Elbinsel unterschiedlichsten Berufsausbildungen und Angeboten.', ST_MakePoint(10.0031441, 53.4996077), 'twemoji:school', true, 'Dratelnstraße 26, 21109 Hamburg');
+   ('2ddcb4d1-626a-42d8-a46f-1cf965a02f20', 'Berufliche Schule ITECH Elbinsel Wilhelmsburg', 'Inklusive Berufsschule auf der Elbinsel mit unterschiedlichsten Berufsausbildungen und Angeboten.', ST_MakePoint(10.0031441, 53.4996077), 'twemoji:school', true, 'Dratelnstraße 26, 21109 Hamburg');
