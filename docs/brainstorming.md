@@ -26,6 +26,7 @@ Nuxt v4 modules:
 - nuxt-maplibre, based on maplibre, a wrapper for openstreetmaps
 - @nuxt/eslint
 - @nuxt/icon
+- @vueuse/nuxt
 
 npm dependcies:
 
@@ -34,6 +35,11 @@ npm dependcies:
 Database:
 
 - PostgreSQL
+
+Map:
+
+- versatiles for vector tiles
+- iconify/glyphs-twemoji for icons, CC-BY 4.0
 
 ## Requirements
 

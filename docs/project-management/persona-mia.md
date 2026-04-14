@@ -50,7 +50,7 @@ Mia is a bright 16-year-old who usually ends up on the couch after school, scrol
 
 - Discovers new things almost exclusively through **social media and word of mouth**
 - Does not actively use desktop computers
-- Only registers for services if it is **quick and doesn't require an ID**
+- Only registers for services if it is **quick**
 - Enjoys sharing finds with her friend group via WhatsApp and Discord
 
 ---
