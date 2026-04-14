@@ -33,17 +33,11 @@ onMounted(() => {
     refresh();
   });
   for (const place of data.value!) {
-    const placeMarker = maplibre.createMarker({
+    const placePopup = maplibre.createPopup({ offset: 25, maxWidth: '100vw' }).setDOMContent(popupRefs.value[place.id]!);
+    maplibre.createMarker({
       element: markerRefs.value[place.id]!,
       anchor: "bottom",
-    }).setLngLat([place.longitude, place.latitude]);
-
-    const popupElem = popupRefs.value[place.id];
-    if (popupElem) {
-      const placePopup = maplibre.createPopup({ offset: 25, maxWidth: '100vw' }).setDOMContent(popupElem);
-      placeMarker.setPopup(placePopup);
-    }
-    placeMarker.addTo(map);
+    }).setLngLat([place.longitude, place.latitude]).setPopup(placePopup).addTo(map);
   }
 });
 </script>
