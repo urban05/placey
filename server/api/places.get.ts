@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   const result: Place[] = await sql`
         SELECT id, name, icon, verified, address, description, ST_Y(cords::geometry) AS latitude, ST_X(cords::geometry) AS longitude
         FROM places
-        WHERE ST_DWithin(cords::geography, ST_MakePoint(${query.latitude}, ${query.longitude}), ${distance})
+        WHERE ST_DWithin(cords::geography, ST_MakePoint(${query.longitude}, ${query.latitude}), ${distance})
     `;
   return result;
 });

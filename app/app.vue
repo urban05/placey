@@ -4,6 +4,7 @@
     <NuxtWelcome /> -->
     <!-- <div class="text-red-500 bg-gray-500">Test</div> -->
     <Map />
+    <Fakegps />
   </div>
 </template>
 
