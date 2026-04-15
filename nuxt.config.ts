@@ -4,8 +4,16 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  app: {
+    head: {
+      title: 'Placey',
+      link: [
+        { rel: 'manifest', href: '/manifest.json' }
+      ]
+    }
+  },
   modules: ['@nuxt/eslint', '@nuxt/icon', '@vueuse/nuxt'],
   vite: {
-    plugins: [ tailwindcss() ]
-  }
+    plugins: [tailwindcss()]
+  },
 })
