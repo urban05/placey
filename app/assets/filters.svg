@@ -1,0 +1,21 @@
+<svg width="0" height="0">
+    <filter id="shimmer">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+
+        <feSpecularLighting result="spec"
+            specularConstant="1.0"
+            specularExponent="40"
+            lighting-color="white">
+            <fePointLight x="-150" y="0" z="0">
+                <animate attributeName="x" values="-150;150" dur="2s" repeatCount="indefinite" />
+                <animate attributeName="z" values="0;100;0" dur="2s" repeatCount="indefinite" />
+            </fePointLight>
+        </feSpecularLighting>
+
+        <feComposite in="spec" in2="SourceGraphic" operator="in" result="composite" />
+        <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode in="composite" />
+        </feMerge>
+    </filter>
+</svg>
