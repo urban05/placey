@@ -1,20 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
+import type { D } from 'vue-router/dist/index-BzEKChPW.js';
 
-const props = defineProps<{defaultSize: Number}>();
+const props = defineProps<{ defaultSize: number }>();
 
 // Ring buffer of recent pointer samples
 const VELOCITY_SAMPLE_MS = 80  // look back window
 const FLING_THRESHOLD = 0.5    // px/ms — tune this
 
-const pointerSamples = []
+const pointerSamples: { y: number; t: number }[] = []
 
 // ─── How far up (% of viewport) before snapping to fullscreen ───
 const FULLSCREEN_THRESHOLD = 55
 // ────────────────────────────────────────────────────────────────
 
 const isFullscreen = ref(false)
-const currentHeight = ref(props.defaultSize)
+const currentHeight = ref<number>(props.defaultSize)
 const isDragging = ref(false)
 const dragStartY = ref(0)
 const dragStartHeight = ref(0)
@@ -25,8 +26,8 @@ const drawerStyle = computed(() => ({
 
 function getVelocity() {
   if (pointerSamples.length < 2) return 0
-  const oldest = pointerSamples[0]
-  const newest = pointerSamples[pointerSamples.length - 1]
+  const oldest = pointerSamples[0]!
+  const newest = pointerSamples[pointerSamples.length - 1]!
   const dy = newest.y - oldest.y          // positive = finger moved down
   const dt = newest.t - oldest.t
   return dt > 0 ? dy / dt : 0             // px/ms, positive = downward
@@ -34,9 +35,9 @@ function getVelocity() {
 
 // ─── Drag handlers ───────────────────────────────────────────────
 
-function onDragStart(e) {
+function onDragStart(e: MouseEvent | TouchEvent) {
   isDragging.value = true
-  dragStartY.value = e.touches ? e.touches[0].clientY : e.clientY
+  dragStartY.value = e instanceof TouchEvent ? e.touches[0]!.clientY : e.clientY
   dragStartHeight.value = currentHeight.value
 
   window.addEventListener('mousemove', onDragMove)
@@ -45,11 +46,11 @@ function onDragStart(e) {
   window.addEventListener('touchend', onDragEnd)
 }
 
-function onDragMove(e) {
+function onDragMove(e: MouseEvent | TouchEvent) {
   if (!isDragging.value) return
   if (e.cancelable) e.preventDefault() // prevent scroll-fighting on touch
 
-  const clientY = e.touches ? e.touches[0].clientY : e.clientY
+  const clientY = e instanceof TouchEvent ? e.touches[0]!.clientY : e.clientY
   const delta = dragStartY.value - clientY
   const newHeight = dragStartHeight.value + (delta / window.innerHeight) * 100
 
@@ -57,7 +58,7 @@ function onDragMove(e) {
 
   // Keep only samples within the window
   const cutoff = performance.now() - VELOCITY_SAMPLE_MS
-  while (pointerSamples.length > 1 && pointerSamples[0].t < cutoff) {
+  while (pointerSamples.length > 1 && pointerSamples[0]!.t < cutoff) {
     pointerSamples.shift()
   }
 
@@ -113,11 +114,7 @@ onUnmounted(() => {
   <div class="drawer z-1" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
 
     <!-- Drag handle -->
-    <div
-      class="drag-handle"
-      @mousedown="onDragStart"
-      @touchstart.prevent="onDragStart"
-    >
+    <div class="drag-handle" @mousedown="onDragStart" @touchstart.prevent="onDragStart">
       <span class="drag-pill" />
     </div>
 
@@ -181,21 +178,26 @@ onUnmounted(() => {
 
 /* ─── Content area ─── */
 .drawer-content {
-  flex: 1;           /* fill remaining drawer height */
+  flex: 1;
+  /* fill remaining drawer height */
   display: flex;
   flex-direction: column;
-  overflow: hidden;  /* clip so only the list scrolls */
+  overflow: hidden;
+  /* clip so only the list scrolls */
   padding: 0 16px;
 }
 
 /* ─── Scrollable list ─── */
 .drawer-list {
-  flex: 1;           /* take all remaining space in drawer-content */
-  overflow-y: auto;  /* scroll independently */
+  flex: 1;
+  /* take all remaining space in drawer-content */
+  overflow-y: auto;
+  /* scroll independently */
   list-style: none;
   margin: 0;
   padding: 8px 0;
-  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+  -webkit-overflow-scrolling: touch;
+  /* smooth momentum scroll on iOS */
 }
 
 .drawer-list-item {
