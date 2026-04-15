@@ -37,7 +37,7 @@ function getVelocity() {
 
 function onDragStart(e: MouseEvent | TouchEvent) {
   isDragging.value = true
-  dragStartY.value = e instanceof TouchEvent ? e.touches[0]!.clientY : e.clientY
+  dragStartY.value = e instanceof MouseEvent ? e.clientY : e.touches[0]!.clientY
   dragStartHeight.value = currentHeight.value
 
   window.addEventListener('mousemove', onDragMove)
@@ -50,7 +50,7 @@ function onDragMove(e: MouseEvent | TouchEvent) {
   if (!isDragging.value) return
   if (e.cancelable) e.preventDefault() // prevent scroll-fighting on touch
 
-  const clientY = e instanceof TouchEvent ? e.touches[0]!.clientY : e.clientY
+  const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0]!.clientY
   const delta = dragStartY.value - clientY
   const newHeight = dragStartHeight.value + (delta / window.innerHeight) * 100
 
