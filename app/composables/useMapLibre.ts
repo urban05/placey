@@ -1,6 +1,7 @@
 import maplibre, {
   Map,
   Marker,
+  NavigationControl,
   Popup,
   type MapOptions,
   type MarkerOptions,
@@ -26,5 +27,6 @@ export function useMapLibre() {
     createMap,
     createMarker,
     createPopup,
+    NavigationControl
   };
 }

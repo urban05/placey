@@ -17,6 +17,13 @@ onMounted(async () => {
     zoom: 13,
   });
 
+  map.value.addControl(new maplibre.NavigationControl({
+    visualizePitch: true,
+    visualizeRoll: true,
+    showZoom: true,
+    showCompass: true
+  }));
+
   // bind map events to refs
   map.value.on("move", () => {
     const center = map.value.getCenter();
@@ -50,7 +57,7 @@ const sortedPlaces = computed(() => {
 </script>
 
 <template>
-  <div id="map" class="h-full w-full">
+  <div id="map" class="size-full">
     <Marker
       v-for="place in sortedPlaces"
       :lng-lat="[place.longitude, place.latitude]"

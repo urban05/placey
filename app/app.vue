@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen h-screen flex flex-row">
-    <PlaceList class="basis-2/5" />
-    <Map class="basis-3/5 h-full" />
+    <PlaceList class="hidden lg:block basis-2/5" />
+    <Map class="lg:basis-full h-full" />
   </div>
 </template>
 
