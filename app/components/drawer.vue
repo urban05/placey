@@ -129,11 +129,6 @@ onUnmounted(() => {
     <!-- Drawer content: flex column so the list can fill remaining space -->
     <div class="drawer-content">
 
-      <!-- Static elements above the list (add whatever you need here) -->
-      <div class="drawer-header">
-        <h2 class="drawer-title">Title</h2>
-      </div>
-
       <!-- Scrollable list — flex: 1 + overflow-y: auto keeps it independent -->
       <slot class="drawer-list" />
       <!-- <ul class="drawer-list">
@@ -196,17 +191,6 @@ onUnmounted(() => {
   flex-direction: column;
   overflow: hidden;  /* clip so only the list scrolls */
   padding: 0 16px;
-}
-
-.drawer-header {
-  flex-shrink: 0;    /* never shrinks — always visible */
-  padding: 0px 0 12px;
-  border-bottom: 1px solid #eee;
-}
-
-.drawer-title {
-  margin: 0;
-  font-size: 1.1rem;
 }
 
 /* ─── Scrollable list ─── */
