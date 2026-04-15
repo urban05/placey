@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import mapConfig from "@/assets/map_config.json";
+import type { Place } from "~~/shared/place.type";
 
 const places = usePlaces();
 const maplibre = useMapLibre();
@@ -54,14 +55,14 @@ const sortedPlaces = computed(() => {
     }))
     .sort((a, b) => a.y - b.y);
 });
+
+const visitedPlaces = useVisitedPlaces();
+
 </script>
 
 <template>
   <div id="map" class="size-full">
-    <Marker
-      v-for="place in sortedPlaces"
-      :lng-lat="[place.longitude, place.latitude]"
-      :icon="place.icon"
-    />
+    <Marker v-for="place in sortedPlaces" :lng-lat="[place.longitude, place.latitude]" :icon="place.icon"
+      :is-shiny="visitedPlaces.has(place.id)" />
   </div>
 </template>
