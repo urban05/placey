@@ -3,12 +3,12 @@
   <Drawer :default-size="drawerDefaultCoverage">
     <PlaceList />
   </Drawer>
+  <div v-html="filtersSvg"></div>
 </template>
 
 <script setup lang="ts">
 import "@/assets/css/index.css";
 import filtersSvg from '@/assets/filters.svg?raw'
-import Drawer from "./components/drawer.vue";
 
 const drawerDefaultCoverage = ref(20);
 </script>
