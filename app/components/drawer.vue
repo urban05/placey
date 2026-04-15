@@ -172,7 +172,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0 6px;
+  padding: 10px 0 14px;
   cursor: grab;
   user-select: none;
   touch-action: none;
@@ -200,7 +200,7 @@ onUnmounted(() => {
 
 .drawer-header {
   flex-shrink: 0;    /* never shrinks — always visible */
-  padding: 8px 0 12px;
+  padding: 0px 0 12px;
   border-bottom: 1px solid #eee;
 }
 
