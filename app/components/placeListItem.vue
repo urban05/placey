@@ -14,7 +14,8 @@
 <script lang="ts" setup>
 import type { Place } from '~~/shared/place.type';
 
-const props = defineProps<{place: Place, visitedPlaces: Set<string>}>();
+const props = defineProps<{place: Place}>();
+const visitedPlaces = useVisitedPlaces();
 </script>
 
 <style>
