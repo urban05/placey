@@ -1,12 +1,7 @@
 <script setup>
 import { ref, computed, onUnmounted } from 'vue'
 
-const props = defineProps({
-  defaultSize: {
-    type: Number,
-    required: true,
-  },
-})
+const props = defineProps<{defaultSize: Number}>();
 
 // Ring buffer of recent pointer samples
 const VELOCITY_SAMPLE_MS = 80  // look back window
