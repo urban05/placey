@@ -10,7 +10,7 @@ graph TB
     PT["place.type.ts"]
   end
 
-  subgraph Presentation["«layer» Presentation"]
+  subgraph PresentationLayer["«layer» Presentation"]
     subgraph Pages["«package» pages"]
       P1["index.vue"]
       P2["profile.vue"]
@@ -26,7 +26,7 @@ graph TB
     end
   end
 
-  subgraph AppLogic["«layer» Application Logic"]
+  subgraph AppLogicLayer["«layer» Application Logic"]
     subgraph Composables["«package» composables"]
       CO1["usePlaces.ts"]
       CO2["useMap.ts"]
@@ -42,7 +42,7 @@ graph TB
     end
   end
 
-  subgraph Server["«subsystem» Nuxt 4 · Nitro"]
+  subgraph ServerLayer["«subsystem» Nuxt 4 · Nitro"]
     subgraph API["«package» server/api"]
       A1["places.get.ts"]
       A2["places.post.ts"]
@@ -60,15 +60,20 @@ graph TB
     T4["users_place"]
   end
 
-  subgraph External["«external»"]
+  subgraph ExternalServices["«external»"]
     EX1["VersaTiles\nVector Tile Server"]
   end
 
-  Presentation  -. "«import»" .-> Composables
-  Presentation  -. "«import»" .-> Shared
-  Composables   -. "«use»"    .-> API
-  API           -. "«import»" .-> Shared
-  API           -. "«use»"    .-> Utils
-  Utils         -. "«access»" .-> DB
-  C1            -. "«use»"    .-> EX1
+  Pages       -. "«import»" .-> Components
+  Pages       -. "«import»" .-> Composables
+  Pages       -. "«import»" .-> Shared
+  Components  -. "«import»" .-> Composables
+  Components  -. "«import»" .-> ExtLibs
+  Components  -. "«import»" .-> Shared
+  Components  -. "«use»"    .-> ExternalServices
+  Composables -. "«import»" .-> ExtLibs
+  Composables -. "«use»"    .-> API
+  API         -. "«import»" .-> Shared
+  API         -. "«use»"    .-> Utils
+  Utils       -. "«access»" .-> DB
 ```
