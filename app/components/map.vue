@@ -18,12 +18,15 @@ onMounted(async () => {
     zoom: 13,
   });
 
-  map.value.addControl(new maplibre.NavigationControl({
-    visualizePitch: true,
-    visualizeRoll: true,
-    showZoom: true,
-    showCompass: true
-  }));
+  map.value.addControl(
+    new maplibre.NavigationControl({
+      visualizePitch: true,
+      visualizeRoll: true,
+      showZoom: true,
+      showCompass: true,
+    }),
+    "bottom-left",
+  );
 
   // bind map events to refs
   map.value.on("move", () => {
@@ -57,12 +60,15 @@ const sortedPlaces = computed(() => {
 });
 
 const visitedPlaces = useVisitedPlaces();
-
 </script>
 
 <template>
   <div id="map" class="size-full z-0">
-    <Marker v-for="place in sortedPlaces" :lng-lat="[place.longitude, place.latitude]" :icon="place.icon"
-      :is-shiny="visitedPlaces.has(place.id)" />
+    <Marker
+      v-for="place in sortedPlaces"
+      :lng-lat="[place.longitude, place.latitude]"
+      :icon="place.icon"
+      :is-shiny="visitedPlaces.has(place.id)"
+    />
   </div>
 </template>
