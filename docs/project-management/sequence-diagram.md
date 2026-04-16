@@ -7,44 +7,72 @@ config:
   theme: neutral
 ---
 sequenceDiagram
-  actor User as 👤 User
-  participant B as Browser (index.vue)
-  participant PS as placeSearch.vue
-  participant uP as usePlaces.ts
-  participant N as Nitro Server
-  participant PG as PostgreSQL + PostGIS
-  participant VT as VersaTiles
+  actor User
+  participant B as browser : Browser
+  participant PS as search : PlaceSearch
+  participant uP as places : usePlaces
+  participant N as server : NitroServer
+  participant PG as db : PostgreSQL
+  participant VT as tiles : VersaTiles
 
-  User->>B: Opens Placey (/)
+  User->>B: navigate("/")
+  activate B
   B->>N: GET /api/places
-  N->>PG: SELECT * FROM places
-  PG-->>N: Place rows
-  N-->>B: JSON place array
-  B->>VT: Request vector tiles (map viewport)
-  VT-->>B: Tile data
-  B-->>User: Map rendered with markers
+  activate N
+  N->>PG: queryAllPlaces()
+  activate PG
+  PG-->>N: Place[]
+  deactivate PG
+  N-->>B: Place[]
+  deactivate N
+  B->>VT: requestTiles(viewport)
+  activate VT
+  VT-->>B: TileData
+  deactivate VT
+  B->>User: renderMap(markers)
+  deactivate B
 
-  User->>PS: Types search query
-  PS->>uP: fetchPlaces(query)
-  uP->>N: GET /api/places/search?q=...
-  N->>PG: SELECT * FROM places\nWHERE name ILIKE %query%
-  PG-->>N: Filtered rows
-  N-->>uP: JSON results
-  uP-->>PS: Reactive place list updated
-  PS-->>User: Drawer shows filtered results
+  User->>B: typeSearchQuery(q)
+  activate B
+  B->>PS: input(q)
+  activate PS
+  PS->>uP: fetchPlaces(q)
+  activate uP
+  uP->>N: GET /api/places/search?q=
+  activate N
+  N->>PG: queryPlacesByName(q)
+  activate PG
+  PG-->>N: Place[]
+  deactivate PG
+  N-->>uP: Place[]
+  deactivate N
+  uP-->>PS: places (reactive update)
+  deactivate uP
+  PS-->>B: listUpdated()
+  deactivate PS
+  B->>User: showFilteredResults()
+  deactivate B
 
-  User->>B: Clicks place marker
-  B-->>User: drawer.vue opens with place detail
+  User->>B: clickMarker(placeId)
+  activate B
+  B->>User: openDrawer(placeDetail)
+  deactivate B
 
-  User->>B: Clicks upvote (voting.vue)
-  B->>N: POST /api/places (vote payload)
-  alt Not authenticated
+  User->>B: clickUpvote(placeId)
+  activate B
+  B->>N: POST /api/places/vote
+  activate N
+  alt unauthenticated
     N-->>B: 401 Unauthorized
-    B-->>User: Prompt to register/login
-  else Authenticated
-    N->>PG: INSERT INTO votes\n(place_id, user_id, vote)
+    B->>User: promptLogin()
+  else authenticated
+    N->>PG: insertVote(placeId, userId, vote)
+    activate PG
     PG-->>N: OK
+    deactivate PG
     N-->>B: 201 Created
-    B-->>User: Vote count updated ✓
+    B->>User: updateVoteCount()
   end
+  deactivate N
+  deactivate B
 ```
