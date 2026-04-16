@@ -61,7 +61,7 @@ export function usePlaces() {
   }
 
   const throttledFetchPlaces = useThrottleFn(fetchPlaces, 1000, true);
-  const throttledSearchPlaces = useThrottleFn(searchPlaces, 1000, true);
+  const throttledSearchPlaces = useThrottleFn(searchPlaces, 500, true);
 
   if (isInitialLoad) {
     isInitialLoad = false;

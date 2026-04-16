@@ -19,7 +19,7 @@ const places = usePlaces();
 const map = useMap();
 const query = useQuery();
 
-async function zoomMapToFit() {
+function zoomMapToFit() {
   const bounds: [number, number, number, number] = places.value.reduce(
     (acc, place) => [
       Math.min(acc[0]!, place.longitude),
