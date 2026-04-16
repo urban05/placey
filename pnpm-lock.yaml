@@ -40,6 +40,9 @@ dependencies:
     version: 5.0.4(@vue/compiler-sfc@3.5.32)(vue@3.5.32)
 
 devDependencies:
+  '@iconify-json/twemoji':
+    specifier: ^1.2.5
+    version: 1.2.5
   '@types/node':
     specifier: ^25.6.0
     version: 25.6.0
@@ -773,6 +776,12 @@ packages:
     engines: {node: '>=18.18'}
     dev: false
 
+  /@iconify-json/twemoji@1.2.5:
+    resolution: {integrity: sha512-uKpuIEV0v6K5BW3Mjdyl+XKFVAbbcPxAgifKvEMtZoUZB5+YiY5zaMm2uNNCxyXzAWU9yNLlj41WU6/mvgALsw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/collections@1.0.671:
     resolution: {integrity: sha512-+UO1BvRCf2zpuKg6REnJfgDjKvtMGjmTFKIZSRhOLK3A6sAFo1ZDB+AjDE1g0lzhKZ4KZsYM7b5tCHFFvalQQA==}
     dependencies:
@@ -781,7 +790,6 @@ packages:
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@3.1.0:
     resolution: {integrity: sha512-Zlzem1ZXhI1iHeeERabLNzBHdOa4VhQbqAcOQaMKuTuyZCpwKbC2R4Dd0Zo3g9EAc+Y4fiarO8HIHRAth7+skw==}
