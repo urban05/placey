@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Map class="fixed top-0 duration-250" :style="`height: ${100 - drawerDefaultCoverage}vh`" />
+    <Map
+      class="fixed top-0"
+      :style="`height: ${100 - drawerDefaultCoverage}vh`"
+    />
+
+    <Navbar class="fixed top-0 w-full" />
+
     <Drawer :default-size="drawerDefaultCoverage">
       <PlaceList />
     </Drawer>
@@ -10,7 +16,7 @@
 
 <script setup lang="ts">
 import "@/assets/css/index.css";
-import filtersSvg from '@/assets/filters.svg?raw'
+import filtersSvg from "@/assets/filters.svg?raw";
 
 const drawerDefaultCoverage = 20;
 </script>
