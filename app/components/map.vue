@@ -16,6 +16,7 @@ onMounted(async () => {
     style: mapConfig as any,
     center: [userLocation.value.longitude, userLocation.value.latitude],
     zoom: 13,
+    pitch: 60,
   });
 
   map.value.addControl(
