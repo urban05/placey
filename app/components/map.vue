@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import mapConfig from "@/assets/map_config.json";
-import type { Place } from "~~/shared/place.type";
+import maplibre from "maplibre-gl";
 
 const places = usePlaces();
-const maplibre = useMapLibre();
+const map = useMap();
 const userLocation = useUserLocation();
 
-const map = shallowRef<maplibregl.Map>(null!);
 provide("map", map);
 
 onMounted(async () => {
   // Initialize the map
-  map.value = maplibre.createMap({
+  map.value = new maplibre.Map({
     container: "map",
     style: mapConfig as any,
     center: [userLocation.value.longitude, userLocation.value.latitude],
@@ -30,31 +29,32 @@ onMounted(async () => {
 
   // bind map events to refs
   map.value.on("move", () => {
-    const center = map.value.getCenter();
+    const center = map.value!.getCenter();
     userLocation.value = {
       latitude: center.lat,
       longitude: center.lng,
-      heading: map.value.getBearing()!,
+      heading: map.value!.getBearing()!,
     };
   });
 
   map.value.on("rotate", () => {
-    const center = map.value.getCenter();
+    const center = map.value!.getCenter();
     userLocation.value = {
       latitude: center.lat,
       longitude: center.lng,
-      heading: map.value.getBearing()!,
+      heading: map.value!.getBearing()!,
     };
   });
 });
 
 // needed to z-sort markers
 const sortedPlaces = computed(() => {
+  if (!map.value) return [];
   userLocation.value; // Ensure reactivity to user location changes
   return places.value
     .map((place) => ({
       ...place,
-      y: map.value.project([place.longitude, place.latitude]).y,
+      y: map.value!.project([place.longitude, place.latitude]).y,
     }))
     .sort((a, b) => a.y - b.y);
 });

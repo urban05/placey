@@ -1,7 +1,7 @@
 <template>
   <div class="relative max-w-xl">
     <input
-      @input="searchPlaces"
+      @keyup.enter="zoomMapToFit"
       v-model="query"
       class="bg-white rounded-full px-4 py-2 shadow-lg w-full"
       placeholder="Search Places"
@@ -15,18 +15,24 @@
 </template>
 
 <script lang="ts" setup>
-import type { Place } from "~~/shared/place.type";
-
-const location = useUserLocation();
 const places = usePlaces();
+const map = useMap();
+const query = useQuery();
 
-const query = ref("");
-
-async function searchPlaces() {
-  const data = await $fetch<Place[]>(
-    `/api/places/search?q=${query.value}&latitude=${location.value.latitude.toFixed(6)}&longitude=${location.value.longitude.toFixed(6)}`,
+async function zoomMapToFit() {
+  const bounds: [number, number, number, number] = places.value.reduce(
+    (acc, place) => [
+      Math.min(acc[0]!, place.longitude),
+      Math.min(acc[1]!, place.latitude),
+      Math.max(acc[2]!, place.longitude),
+      Math.max(acc[3]!, place.latitude),
+    ],
+    [Infinity, Infinity, -Infinity, -Infinity],
   );
 
-  places.value = data;
+  map.value?.fitBounds(bounds, {
+    padding: { top: 150, bottom: 150, left: 150, right: 150 },
+    maxZoom: 15,
+  });
 }
 </script>
