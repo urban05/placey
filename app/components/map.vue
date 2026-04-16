@@ -25,7 +25,6 @@ onMounted(async () => {
       showZoom: true,
       showCompass: true,
     }),
-    "bottom-left",
   );
 
   // bind map events to refs
@@ -72,3 +71,10 @@ const visitedPlaces = useVisitedPlaces();
     />
   </div>
 </template>
+
+<style scoped>
+:deep(.maplibregl-ctrl-group) {
+  margin-top: 80px !important;
+  border-radius: 50vh !important;
+}
+</style>
