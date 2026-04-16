@@ -136,4 +136,4 @@ Please keep entries accurate, inclusive, and respectful of the community this pr
 
 ---
 
-*Built with ❤️ in Hamburg for the people of Wilhelmsburg.*
+*Built with ❤️ in Hamburg.*
