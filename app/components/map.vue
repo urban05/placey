@@ -76,5 +76,6 @@ const visitedPlaces = useVisitedPlaces();
 :deep(.maplibregl-ctrl-group) {
   margin-top: 80px !important;
   border-radius: 50vh !important;
+  overflow: hidden !important;
 }
 </style>
