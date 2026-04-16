@@ -1,6 +1,6 @@
 # Requirements-Analysis – Open-Source Map for 3rd Places – Placey
 
-![Logo for placey, a happy map pin](https://github.com/urban05/placey/blob/docs-improvements/app/assets/placey-happy.webp)]
+![Logo for placey, a happy map pin](https://github.com/urban05/placey/blob/docs-improvements/app/assets/placey-happy.webp)
 
 ## ITECH Software Engineering – Case 1
 
