@@ -24,6 +24,10 @@ const drawerStyle = computed(() => ({
   height: `${currentHeight.value}vh`,
 }))
 
+watch(() => props.defaultSize, (newVal) => {
+  if (!isFullscreen.value) currentHeight.value = newVal;
+});
+
 function getVelocity() {
   if (pointerSamples.length < 2) return 0
   const oldest = pointerSamples[0]!
@@ -111,7 +115,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="drawer z-1" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
+  <div class="drawer z-10" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
 
     <!-- Drag handle -->
     <div class="drag-handle" @mousedown="onDragStart" @touchstart.prevent="onDragStart">

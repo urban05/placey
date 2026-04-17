@@ -5,6 +5,7 @@ import maplibre from "maplibre-gl";
 const places = usePlaces();
 const map = useMap();
 const userLocation = useUserLocation();
+const currentPlace = useCurrentPlace();
 
 provide("map", map);
 
@@ -60,6 +61,14 @@ const sortedPlaces = computed(() => {
 });
 
 const visitedPlaces = useVisitedPlaces();
+
+watch(currentPlace, (newVal) => {
+  if (newVal)
+    map.value?.panTo([newVal.longitude, newVal.latitude], {
+      padding: { top: 150, bottom: 150, left: 150, right: 150 },
+      zoom: 15,
+  })
+});
 </script>
 
 <template>
@@ -69,6 +78,7 @@ const visitedPlaces = useVisitedPlaces();
       :lng-lat="[place.longitude, place.latitude]"
       :icon="place.icon"
       :is-shiny="visitedPlaces.has(place.id)"
+      @click="currentPlace = place"
     />
   </div>
 </template>

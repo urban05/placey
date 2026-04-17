@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow">
+  <button class="flex items-center gap-4 p-4 w-full bg-white rounded-lg shadow" @click="onPlaceClick">
     <Icon :name="place.icon" size="60" :style="visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''" />
 
     <div class="flex-1">
@@ -8,7 +8,7 @@
     </div>
 
     <Voting :place="place" />
-  </div>
+  </button>
 </template>
 
 <script lang="ts" setup>
@@ -16,4 +16,9 @@ import type { Place } from '~~/shared/place.type';
 
 const props = defineProps<{ place: Place }>();
 const visitedPlaces = useVisitedPlaces();
+const currentPlace = useCurrentPlace();
+
+function onPlaceClick() {
+  currentPlace.value = props.place;
+}
 </script>
