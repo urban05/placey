@@ -1,13 +1,15 @@
 <template>
   <div v-if="place" class="h-full">
     <div class="h-full flex flex-row gap-2">
-      <div class="grow overflow-y-scroll pr-2 pb-2 flex flex-col gap-4">
-        <img class="h-[50%]" />
+      <div class="grow overflow-y-scroll pr-2 pb-4 flex flex-col gap-4">
+        <img class="h-[50%]" :src="place.image"/>
         <div class="flex flex-row gap-2 items-center">
           <Icon :name="place.icon" size="50" :style="visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''" />
-          <h3 class="grow font-semibold text-gray-900">{{ place.name }}</h3>
+          <h3 class="font-semibold text-gray-900">{{ place.name }}</h3>
+          <Icon v-if="place.verified" name="twemoji:check-mark-button" size="20" />
         </div>
-        <p class="text-sm text-gray-600">{{ place.description }}</p>
+        <p class="text-sm text-gray-800">{{ place.description }}</p>
+        <div class="text-center text-sm text-gray-600">{{ place.address }}</div>
       </div>
       <div class="flex flex-col gap-4">
         <button class="aspect-square size-8 relative rounded-full shadow-lg bg-white" @click="onCloseClick">
