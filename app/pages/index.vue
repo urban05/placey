@@ -4,6 +4,7 @@
 
     <Navbar class="fixed top-0 w-full" />
 
+    <div class="fixed bottom-0 left-0 w-screen bg-[#eeeeee] duration-300" :style="`height: ${drawerDefaultCoverage}%`" />
     <Drawer :default-size="drawerDefaultCoverage">
       <PlaceList v-if="currentPlace === null" />
       <PlaceInfo v-else />
