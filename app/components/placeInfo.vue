@@ -2,7 +2,7 @@
   <div v-if="place" class="h-full">
     <div class="h-full flex flex-row gap-2">
       <div class="grow overflow-y-scroll pr-2 pb-4 flex flex-col gap-4">
-        <img class="h-[50%]" :src="place.image"/>
+        <img class="block max-w-full max-h-[50%] w-auto h-auto self-center shrink-0" :src="place_image"/>
         <div class="flex flex-row gap-2 items-center">
           <Icon :name="place.icon" size="50" :style="visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''" />
           <h3 class="font-semibold text-gray-900">{{ place.name }}</h3>
@@ -24,6 +24,7 @@
 <script lang="ts" setup>
 const visitedPlaces = useVisitedPlaces();
 const place = useCurrentPlace();
+const place_image = computed(() => place.value?.image ?? "placeholder.svg");
 
 function onCloseClick() {
   place.value = null;
