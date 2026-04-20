@@ -115,23 +115,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="drawer z-10" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
+  <div class="drawer fixed left-0 right-0 bottom-0 flex flex-col rounded-2xl z-10" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
 
     <!-- Drag handle -->
-    <div class="drag-handle" @mousedown="onDragStart" @touchstart.prevent="onDragStart">
-      <span class="drag-pill" />
+    <div class="shrink-0 flex justify-center items-center pt-3 pb-4 select-none touch-none cursor-grab active:cursor-grabbing" @mousedown="onDragStart" @touchstart.prevent="onDragStart">
+      <span class="w-10 h-1 rounded-xs bg-[#ccc]" />
     </div>
 
     <!-- Drawer content: flex column so the list can fill remaining space -->
-    <div class="drawer-content">
+    <div class="flex-1 flex flex-col overflow-hidden px-4">
 
       <!-- Scrollable list — flex: 1 + overflow-y: auto keeps it independent -->
-      <slot class="drawer-list" />
-      <!-- <ul class="drawer-list">
-        <li v-for="n in 40" :key="n" class="drawer-list-item">
-          Item {{ n }}
-        </li>
-      </ul> -->
+      <slot class="drawer-list flex-1 overflow-y-auto list-none m-0 py-2 scrolling" />
 
     </div>
   </div>
@@ -139,75 +134,16 @@ onUnmounted(() => {
 
 <style scoped>
 .drawer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #eeeeee;
-  border-radius: 16px 16px 0 0;
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
-  display: flex;
-  flex-direction: column;
   transition: height 0.3s ease, z-index 0s;
   will-change: height;
 }
-
-/* Disable transition while actively dragging for responsive feel */
 .drawer.is-dragging {
+  /* Disable transition while actively dragging for responsive feel */
   transition: none;
 }
-
-/* ─── Drag handle ─── */
-.drag-handle {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0 14px;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-}
-
-.drag-handle:active {
-  cursor: grabbing;
-}
-
-.drag-pill {
-  width: 40px;
-  height: 4px;
-  border-radius: 2px;
-  background: #ccc;
-}
-
-/* ─── Content area ─── */
-.drawer-content {
-  flex: 1;
-  /* fill remaining drawer height */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  /* clip so only the list scrolls */
-  padding: 0 16px;
-}
-
-/* ─── Scrollable list ─── */
 .drawer-list {
-  flex: 1;
-  /* take all remaining space in drawer-content */
-  overflow-y: auto;
-  /* scroll independently */
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
-  -webkit-overflow-scrolling: touch;
   /* smooth momentum scroll on iOS */
-}
-
-.drawer-list-item {
-  padding: 12px 4px;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 0.95rem;
-  color: #333;
+  -webkit-overflow-scrolling: touch;
 }
 </style>
