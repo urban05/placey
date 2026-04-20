@@ -26,7 +26,7 @@ VALUES
     'Öffentliche Grünanlage mit Spiel, Sport und Freizeitflächen. Passt gut als frei zugänglicher Aufenthaltsort für Jugendliche und junge Erwachsene.',
     ST_MakePoint (10.002920, 53.495208),
     'twemoji:deciduous-tree',
-    true,
+    false,
     'Am Inselpark, 21109 Hamburg',
     null
   ),
@@ -66,7 +66,7 @@ VALUES
     'Großer Sportverein auf der Elbinsel mit breitem Sportangebot.',
     ST_MakePoint (10.0253387, 53.4868669),
     'twemoji:soccer-ball',
-    true,
+    false,
     'Karl-Arnold-Ring 15a, 21109 Hamburg',
     null
   ),
