@@ -6,7 +6,8 @@ INSERT INTO
     cords,
     icon,
     verified,
-    address
+    address,
+    image
   )
 VALUES
   (
@@ -16,7 +17,8 @@ VALUES
     ST_MakePoint (15.606133, 48.105288),
     'twemoji:books',
     true,
-    'Vogelhüttendeich 45, 21107 Hamburg'
+    'Vogelhüttendeich 45, 21107 Hamburg',
+    null
   ),
   (
     '3eb59bcc-e6e0-4571-ba7b-97b1d6ff4275',
@@ -25,7 +27,8 @@ VALUES
     ST_MakePoint (10.002920, 53.495208),
     'twemoji:deciduous-tree',
     true,
-    'Am Inselpark, 21109 Hamburg'
+    'Am Inselpark, 21109 Hamburg',
+    null
   ),
   (
     '8c78f375-c41f-459a-bcc0-98a9e863b8de',
@@ -34,7 +37,8 @@ VALUES
     ST_MakePoint (9.991053, 53.511234),
     'twemoji:people-holding-hands',
     true,
-    'Rotenhäuser Damm 58, 21107 Hamburg'
+    'Rotenhäuser Damm 58, 21107 Hamburg',
+    null
   ),
   (
     'de4ec082-0be9-4181-af1f-9158144a9355',
@@ -43,7 +47,8 @@ VALUES
     ST_MakePoint (10.013570, 53.497596),
     'twemoji:people-holding-hands',
     true,
-    'Krieterstraße 11, 21109 Hamburg'
+    'Krieterstraße 11, 21109 Hamburg',
+    null
   ),
   (
     'a9b883fd-7949-4d21-82b9-7ca820a476c8',
@@ -52,7 +57,8 @@ VALUES
     ST_MakePoint (9.982788, 53.5158095),
     'twemoji:performing-arts',
     true,
-    'Industriestraße 125-131, 21107 Hamburg'
+    'Industriestraße 125-131, 21107 Hamburg',
+    null
   ),
   (
     '74d139e2-7959-4d33-bc66-23e24ad8286f',
@@ -61,7 +67,8 @@ VALUES
     ST_MakePoint (10.0253387, 53.4868669),
     'twemoji:soccer-ball',
     true,
-    'Karl-Arnold-Ring 15a, 21109 Hamburg'
+    'Karl-Arnold-Ring 15a, 21109 Hamburg',
+    null
   ),
   (
     '84f3a4a7-9aa8-484c-afb7-c8d3dbea27bc',
@@ -70,7 +77,8 @@ VALUES
     ST_MakePoint (10.0124832, 53.5000361),
     'twemoji:school',
     true,
-    'Krieterstraße 2d, 21109 Hamburg'
+    'Krieterstraße 2d, 21109 Hamburg',
+    null
   ),
   (
     '51e0b0e4-1e70-4547-a315-84ddb470463d',
@@ -79,7 +87,8 @@ VALUES
     ST_MakePoint (10.023992, 53.48682),
     'twemoji:school',
     true,
-    'Karl-Arnold-Ring 13, 21109 Hamburg'
+    'Karl-Arnold-Ring 13, 21109 Hamburg',
+    null
   ),
   (
     'aa9fd5d4-af49-4397-ae04-ecd3c4aa0469',
@@ -88,7 +97,8 @@ VALUES
     ST_MakePoint (9.9901507, 53.514347),
     'twemoji:church',
     true,
-    'Eckermannstraße 1a, 21107 Hamburg'
+    'Eckermannstraße 1a, 21107 Hamburg',
+    null
   ),
   (
     '82dbad2f-af27-4461-9548-16a8653eb0cd',
@@ -97,7 +107,8 @@ VALUES
     ST_MakePoint (10.0110426, 53.5002946),
     'twemoji:church',
     true,
-    'Jungnickelstraße 21, 21109 Hamburg'
+    'Jungnickelstraße 21, 21109 Hamburg',
+    null
   ),
   (
     '2ddcb4d1-626a-42d8-a46f-1cf965a02f20',
@@ -106,5 +117,6 @@ VALUES
     ST_MakePoint (10.0031441, 53.4996077),
     'twemoji:school',
     true,
-    'Dratelnstraße 26, 21109 Hamburg'
+    'Dratelnstraße 26, 21109 Hamburg',
+    'places/itech.jpg'
   );
