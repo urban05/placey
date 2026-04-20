@@ -2,6 +2,9 @@
 import mapConfig from "@/assets/map_config.json";
 import maplibre from "maplibre-gl";
 
+const props = defineProps<{ bottomMargin: number }>();
+const bottomMarginComputed = computed(() => `calc(${props.bottomMargin}vh + 1em)`)
+
 const places = usePlaces();
 const map = useMap();
 const userLocation = useUserLocation();
@@ -76,5 +79,9 @@ const visitedPlaces = useVisitedPlaces();
   margin-top: 100px !important;
   border-radius: 50vh !important;
   overflow: hidden !important;
+}
+:deep(.maplibregl-ctrl-attrib) {
+  margin-bottom: v-bind('bottomMarginComputed') !important;
+  transition-duration: 0.3s;
 }
 </style>
