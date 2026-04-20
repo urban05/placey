@@ -115,7 +115,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="drawer fixed left-0 right-0 bottom-0 flex flex-col rounded-2xl z-10" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
+  <div class="drawer fixed left-0 right-0 bottom-0 flex flex-col rounded-2xl backdrop-blur-md bg-white/20 border border-white/30 z-10" :style="drawerStyle" :class="{ 'is-dragging': isDragging }">
 
     <!-- Drag handle -->
     <div class="shrink-0 flex justify-center items-center pt-3 pb-4 select-none touch-none cursor-grab active:cursor-grabbing" @mousedown="onDragStart" @touchstart.prevent="onDragStart">
