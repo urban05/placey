@@ -4,6 +4,7 @@ import type { Place } from "~~/shared/place.type";
 let isInitialLoad = true;
 
 export function usePlaces() {
+  const api = useApi();
   const userLocation = useUserLocation();
   const query = useQuery();
 
@@ -37,9 +38,7 @@ export function usePlaces() {
     latitude: number;
     longitude: number;
   }) {
-    const data = await $fetch<Place[]>(
-      `/api/places?latitude=${location.latitude.toFixed(6)}&longitude=${location.longitude.toFixed(6)}`,
-    );
+    const data = await api.fetchPlaces(location);
 
     places.value = data;
     lastQueryLocation.value = location;
@@ -52,9 +51,7 @@ export function usePlaces() {
     },
     query: string,
   ) {
-    const data = await $fetch<Place[]>(
-      `/api/places/search?q=${query}&latitude=${location.latitude.toFixed(6)}&longitude=${location.longitude.toFixed(6)}`,
-    );
+    const data = await api.searchPlaces(location, query);
 
     places.value = data;
     lastQueryLocation.value = location;
