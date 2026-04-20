@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import "@/assets/css/index.css";
 import filtersSvg from "@/assets/filters.svg?raw";
-import type { LngLatLike } from "maplibre-gl";
 import type { Place } from "~~/shared/place.type";
 const currentPlace = useCurrentPlace();
 
