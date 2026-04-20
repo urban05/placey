@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const sql = usePostgres();
   const result: Place[] = await sql`
-    SELECT id, name, icon, verified, address, description, ST_Y(cords::geometry) AS latitude, ST_X(cords::geometry) AS longitude
+    SELECT id, name, icon, verified, address, description, ST_Y(cords::geometry) AS latitude, ST_X(cords::geometry) AS longitude, image
     FROM places
     WHERE ST_DWithin(cords::geography, ST_MakePoint(${query.longitude}, ${query.latitude}), ${distance})
   `;
