@@ -17,6 +17,8 @@
 
 <script lang="ts" setup>
 
+const user = useUser()
+
 const registerEmail = ref("")
 const registerUsername = ref("")
 
@@ -24,8 +26,6 @@ async function register(email: string, username: string) {
   const response = await $fetch(
     `/api/user`, { method: "POST", body: { email, username } }
   );
-
-  console.log(response)
 }
 
 
@@ -36,8 +36,6 @@ async function requestLogin(email: string) {
   const response = await $fetch(
     `/api/user/requestLogin`, { method: "POST", body: { email } }
   );
-
-  console.log(response)
 }
 
 async function login(email: string, otp: string) {
@@ -45,7 +43,8 @@ async function login(email: string, otp: string) {
     `/api/user/login`, { method: "POST", body: { email, otp } }
   );
 
-  console.log(response)
+  if (!response) return;
+  user.value = response;
 }
 
 </script>
