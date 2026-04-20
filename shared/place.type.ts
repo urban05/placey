@@ -10,4 +10,5 @@ export interface Place {
   latitude: number;
   longitude: number;
   image: string | null;
+  votes: number;
 }

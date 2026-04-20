@@ -6,7 +6,7 @@
       </svg>
     </button>
 
-    <span>35</span>
+    <span>{{ place.votes }}</span>
 
     <button @click="toggleDownvote">
       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">

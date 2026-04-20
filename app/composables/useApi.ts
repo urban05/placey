@@ -1,3 +1,4 @@
+import type { UUID } from "crypto";
 import type { Place } from "~~/shared/place.type";
 
 export function useApi() {
@@ -53,11 +54,37 @@ export function useApi() {
         return data
     }
 
+    // fetch own votes
+    async function fetchVotes(): Promise<Map<UUID, boolean>> {
+        if (!user.value) throw "must be logged in"
+
+        const data = await $fetch<{
+            placeId: UUID,
+            vote: boolean
+        }[]>(
+            `/api/votes`,
+            {
+                headers: {
+                    authorization: `Bearer ${user.value?.token}`
+                }
+            }
+        );
+
+        const result = new Map()
+
+        for (const vote of data) {
+            result.set(vote.placeId, vote.vote)
+        }
+
+        return result
+    }
+
     return {
         register,
         requestLogin,
         login,
         fetchPlaces,
-        searchPlaces
+        searchPlaces,
+        fetchVotes
     }
 }

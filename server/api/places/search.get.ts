@@ -12,9 +12,12 @@ export default defineEventHandler(async (event) => {
 
   const sql = usePostgres();
   const result: Place[] = await sql`
-    SELECT id, name, icon, verified, address, description, ST_Y(cords::geometry) AS latitude, ST_X(cords::geometry) AS longitude, image
-    FROM places
+    SELECT p.id, p.name, p.icon, p.verified, p.address, p.description, ST_Y(p.cords::geometry) AS latitude, ST_X(p.cords::geometry) AS longitude, p.image, COALESCE(SUM(v.vote), 0) AS votes
+    FROM places p
+    LEFT JOIN votes v
+    ON p.id = v.place_id
     WHERE name ILIKE ${`%${query.q}%`}
+    GROUP BY p.id
     ORDER BY ST_Distance(cords::geography, ST_MakePoint(${query.longitude}, ${query.latitude})) ASC
     LIMIT ${maxResults}
   `;
