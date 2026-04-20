@@ -74,7 +74,9 @@ Create a `.env` file in the project root:
 
 ```env
 DATABASE_URL=postgres://user:password@localhost:5432/placey
+TOKEN_SECRET=[a random string for JWT signing]
 ```
+You can get a random string for `TOKEN_SECRET` using [this](https://www.convertsimple.com/random-base64-generator/) or any other way you might know.
 
 ### Docker Compose
 
