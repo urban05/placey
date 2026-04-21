@@ -81,6 +81,22 @@ export function useApi() {
     return result;
   }
 
+  // sets a vote
+  async function vote(placeId: UUID, vote: boolean | null): Promise<void> {
+    if (!user.value) throw "must be logged in";
+
+    const response = await $fetch(`/api/votes`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${user.value?.token}`,
+      },
+      body: {
+        placeId,
+        vote,
+      },
+    });
+  }
+
   return {
     register,
     requestLogin,
@@ -88,5 +104,6 @@ export function useApi() {
     fetchPlaces,
     searchPlaces,
     fetchVotes,
+    vote,
   };
 }
