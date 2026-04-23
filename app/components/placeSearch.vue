@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-const places = usePlaces();
+const { places, fetch } = usePlaces();
 const map = useMap();
 const query = useQuery();
 
@@ -27,4 +27,7 @@ function zoomMapToFit() {
     maxZoom: 15,
   });
 }
+
+watch(query, fetch)
+
 </script>

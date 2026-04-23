@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import mapConfig from "@/assets/map_config.json";
+import maplibregl from "maplibre-gl";
 import maplibre from "maplibre-gl";
 
 const props = defineProps<{ bottomMargin: number }>();
 const bottomMarginComputed = computed(() => `calc(${props.bottomMargin}vh + 1em)`)
 
-const places = usePlaces();
+const { places, fetch } = usePlaces();
 const map = useMap();
 const userLocation = useUserLocation();
 const currentPlace = useCurrentPlace();
@@ -65,6 +66,40 @@ const sortedPlaces = computed(() => {
 
 const visitedPlaces = useVisitedPlaces();
 
+const lastQueryLocation = useState<{
+  latitude: number;
+  longitude: number;
+} | null>("places:lastLocation", () => null);
+
+function shouldQueryNewPlaces(newLocation: {
+  latitude: number;
+  longitude: number;
+}) {
+  if (!lastQueryLocation.value) return true;
+
+  const point1 = new maplibregl.LngLat(
+    newLocation.longitude,
+    newLocation.latitude,
+  );
+  const point2 = new maplibregl.LngLat(
+    lastQueryLocation.value.longitude,
+    lastQueryLocation.value.latitude,
+  );
+
+  const distanceInMeters = point1.distanceTo(point2);
+
+  return distanceInMeters > 500;
+}
+
+watch(() => {
+  return {
+    latitude: userLocation.value.latitude,
+    longitude: userLocation.value.longitude
+  }
+}, (location) => {
+  if (shouldQueryNewPlaces(location)) fetch()
+})
+
 </script>
 
 <template>
@@ -80,6 +115,7 @@ const visitedPlaces = useVisitedPlaces();
   border-radius: 50vh !important;
   overflow: hidden !important;
 }
+
 :deep(.maplibregl-ctrl-attrib) {
   margin-bottom: v-bind('bottomMarginComputed') !important;
   transition-duration: 0.3s;

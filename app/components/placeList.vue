@@ -3,7 +3,7 @@
     <template v-if="places && places.length != 0">
       <PlaceListItem v-for="place in places" :key="place.id" :place="place" />
       <div class="flex flex-row justify-center my-8">
-        <div class="bg-gray-300 h-0.25 w-1/2" />
+        <div class="bg-gray-300 h-px w-1/2" />
       </div>
     </template>
     <button class="flex items-center gap-4 p-4 w-full bg-white rounded-lg shadow" @click="onAddPlace">
@@ -14,11 +14,11 @@
       </div>
     </button>
   </div>
-  
+
 </template>
 
 <script setup lang="ts">
-const places = usePlaces();
+const { places } = usePlaces();
 
 function onAddPlace() {
   console.log('Add Place');
