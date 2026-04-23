@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "migrate": "node-pg-migrate -j ts",
-    "dbupdate": "docker compose down -v && docker compose up -d && sleep 2 && pnpm migrate up"
+    "remigrate": "docker compose down -v && docker compose up -d && sleep 4 && pnpm migrate up"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.2",

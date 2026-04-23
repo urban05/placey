@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center w-full bg-white rounded-lg shadow">
+  <div class="flex items-center w-full bg-white rounded-lg shadow overflow-hidden">
     <button class="grow relative" @click="onPlaceClick">
       <img class="absolute size-full object-cover object-center opacity-50 z-0" :src="place_image" />
       <div class="flex flex-col gap-2 p-2 text-left">
