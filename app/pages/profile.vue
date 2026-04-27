@@ -1,121 +1,11 @@
-<template>
-  <div v-if="user">
-    <section>
-      <button @click="logout()">Logout</button>
-      <NuxtLink to="/">Back to home</NuxtLink>
-    </section>
-  </div>
-  <div
-    v-else
-    class="w-screen h-screen flex flex-col justify-center align-middle bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]"
-    :style="{
-      backgroundImage:
-        'linear-gradient(45deg, transparent 49%, #e5e7eb 49%, #e5e7eb 51%, transparent 51%),linear-gradient(-45deg, transparent 49%, #e5e7eb 49%, #e5e7eb 51%, transparent 51%)',
-      backgroundSize: '2em 2em',
-    }"
-  >
-    <form
-      class="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl overflow-hidden"
-    >
-      <div class="p-8">
-        <NuxtLink to="/" class="text-xs">Back to home</NuxtLink>
-        <h2 class="text-center text-3xl font-extrabold">
-          {{ registerView ? "Register" : "Welcome Back" }}
-        </h2>
-        <section class="flex flex-col px-4 mt-8">
-          <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
-          <template v-if="otpView && email !== ''">
-            <MsgBox type="info" class="mb-4"
-              >Please enter the code we have send you to your email
-              address.</MsgBox
-            >
-            <IconInput
-              v-model="otp"
-              icon-name=""
-              placeholder="OTP token"
-              @submit="login()"
-            />
-            <button @click="login()" class="primaryButton" :disabled="loading">
-              {{ loading ? "..." : "Login" }}
-            </button>
-          </template>
-          <template v-else>
-            <template v-if="registerView">
-              <IconInput
-                v-model="email"
-                icon-name="twemoji:envelope"
-                placeholder="E-Mail"
-                autocomplete="email"
-                type="email"
-              />
-              <IconInput
-                v-model="username"
-                icon-name="twemoji:bust-in-silhouette"
-                placeholder="Username"
-                @submit="register()"
-              />
-              <button
-                @click="register()"
-                class="primaryButton"
-                :disabled="loading"
-              >
-                {{ loading ? "..." : "Register" }}
-              </button>
-              <div>
-                Already have an account?
-                <button
-                  @click="
-                    registerView = false;
-                    error = null;
-                  "
-                  class="secondaryButton"
-                >
-                  Login instead
-                </button>
-              </div>
-            </template>
-            <template v-else>
-              <IconInput
-                v-model="email"
-                icon-name="twemoji:envelope"
-                placeholder="E-Mail"
-                autocomplete="email"
-                type="email"
-                @submit="requestLogin()"
-              />
-              <button
-                @click="requestLogin()"
-                class="primaryButton"
-                :disabled="loading"
-              >
-                {{ loading ? "..." : "Request Code" }}
-              </button>
-              <div>
-                New here?
-                <button
-                  @click="
-                    registerView = true;
-                    error = null;
-                  "
-                  class="secondaryButton"
-                >
-                  Register
-                </button>
-              </div>
-            </template>
-          </template>
-        </section>
-      </div>
-    </form>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { FetchError } from "ofetch";
+import type { Place } from "~~/shared/place.type";
 
 const api = useApi();
 const user = useUser();
 const votes = useVotes();
+const places = ref<Place[] | null>(null);
 
 const loading = ref(false);
 const registerView = ref(false);
@@ -125,6 +15,24 @@ const error = ref<string | null>(null);
 const username = ref("");
 const email = ref("");
 const otp = ref("");
+
+const now = useNow({ interval: 100});
+const otpTimeout = 30000;
+const otpSendedTime = ref(Date.now());
+const otpSendedElapsed = computed(() => now.value.getTime() - otpSendedTime.value);
+const otpSendAllow = computed(() => otpSendedElapsed.value > otpTimeout);
+
+const modalRef = useTemplateRef('modalRef')
+const showModal = ref(false);
+
+const placeSearch = ref("");
+
+onMounted(async () => {
+  places.value = await api.fetchVisitedPlaces();
+});
+
+const filteredPlaces = computed(() => places.value?.filter((v, _) => v.name.toLowerCase().includes(placeSearch.value.toLowerCase()) ?? []));
+
 
 async function register() {
   if (email.value === "" || username.value === "") {
@@ -161,6 +69,7 @@ async function requestLogin() {
     loading.value = true;
     error.value = null;
     await api.requestLogin(email.value);
+    otpSendedTime.value = Date.now();
     otpView.value = true;
     loading.value = false;
   } catch (e) {
@@ -206,7 +115,132 @@ function logout() {
   otpView.value = false;
   registerView.value = false;
 }
+
+function onDocClick(e: any) {
+  if (showModal.value && !e.target.contains(modalRef.value))
+  showModal.value = false;
+}
+
+watch(showModal, (newValue) => {
+  if (newValue) setTimeout(() => document.addEventListener('click', onDocClick), 0);
+  else document.removeEventListener('click', onDocClick);
+});
+
+onUnmounted(() => document.removeEventListener('click', onDocClick));
 </script>
+
+<template @click="showModal = false">
+  <!-- settings modal -->
+  <div v-if="showModal && user !== null" ref="modalRef" class="fixed top-22 right-4 w-50 p-2 flex flex-col gap-2 bg-white rounded-lg shadow">
+    <NuxtLink to="/settings" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
+      <Icon name="twemoji:gear" class="size-5" />
+      <div class="font-semibold">Settings</div>
+    </NuxtLink>  
+    <button class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]" @click="logout()">
+      <Icon name="twemoji:ladder" class="size-5" />
+      <div class="font-semibold">Log out</div>
+    </button>
+  </div>
+
+  <!-- main -->
+  <div v-if="user" class="w-screen h-screen p-4 flex flex-col">
+    <section class="flex justify-between items-start">
+      <NuxtLink to="/" class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow"><Icon name="twemoji:back-arrow" size="25" /></NuxtLink>
+      <div class="self-center text-2xl font-bold">Profile</div>
+      <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow" @click="showModal = true"><Icon name="twemoji:gear" size="30" /></button>
+    </section>
+    <section class="flex gap-8 px-4 py-12 items-stretch">
+      <img src="../assets/placey-happy.webp" class="h-20 aspect-square p-2 border border-gray-200 rounded-full" />
+      <div class="grow flex flex-col items-center">
+        <div class="grow flex justify-center items-center text-5xl font-bold">16</div>
+        <p>Du bist der Allerbeste!</p>
+      </div>
+    </section>
+    <section class="grow flex flex-col gap-4">
+      <div class="w-full max-w-xl border border-gray-300 rounded-full flex gap-2 mx-auto px-4 py-2">
+        <input v-model="placeSearch" placeholder="Search Places" class="grow outline-none min-w-0" />
+        <Icon name="twemoji:magnifying-glass-tilted-right" class="shrink-0 grayscale pointer-events-none" size="30" />
+      </div>
+      <div class="grow grid grid-cols-4 content-start gap-2">
+        <div v-for="place in filteredPlaces" class="relative flex justify-center items-center border border-gray-300 aspect-square overflow-hidden">
+          <Icon :name="place.icon" size="50" />
+          <img :src="place.image ?? 'placeholder.svg'" class="absolute size-full object-cover object-center opacity-50 -z-1" />
+          <div class="absolute bottom-0 w-full text-xs">{{ place.name }}</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- login -->
+  <div
+    v-else
+    class="w-screen h-screen flex flex-col justify-center align-middle bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]"
+    :style="{
+      backgroundImage: 'linear-gradient(45deg, transparent 49%, #e5e7eb 49%, #e5e7eb 51%, transparent 51%),linear-gradient(-45deg, transparent 49%, #e5e7eb 49%, #e5e7eb 51%, transparent 51%)',
+      backgroundSize: '2em 2em',
+    }"
+  >
+    <form class="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+      <div class="p-8">
+        <NuxtLink to="/" class="text-xs">Back to home</NuxtLink>
+        <h2 class="text-center text-3xl font-extrabold">
+          {{ registerView ? "Register" : "Welcome Back" }}
+        </h2>
+        <section class="flex flex-col px-4 mt-8">
+          <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
+          <template v-if="otpView && email !== ''">
+            <MsgBox type="info" class="mb-4">
+              Please enter the code we have send you to your email address.
+            </MsgBox>
+            <IconInput v-model="otp" icon-name="" placeholder="OTP token" @submit="login()" />
+            <button @click="login()" class="primaryButton" :disabled="loading">
+              {{ loading ? "..." : "Login" }}
+            </button>
+            <div class="mt-4">
+              Didn't worked?
+              <button
+                v-if="otpSendAllow"
+                class="secondaryButton"
+                type="button"
+                @click="requestLogin()"
+              >
+                Resend Code
+              </button>
+              <span v-else>Resend Code in {{ Math.ceil((otpTimeout - otpSendedElapsed) / 1000) }}</span>
+            </div>
+          </template>  
+          <template v-else>
+            <template v-if="registerView">
+              <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email" type="email" />
+              <IconInput v-model="username" icon-name="twemoji:bust-in-silhouette" placeholder="Username" @submit="register()" />
+              <button class="primaryButton" :disabled="loading" @click="register()">
+                {{ loading ? "..." : "Register" }}
+              </button>
+              <div class="mt-4">
+                Already have an account?
+                <button class="secondaryButton" @click="registerView = false; error = null;">
+                  Login instead
+                </button>
+              </div>  
+            </template>  
+            <template v-else>
+              <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email" type="email" @submit="requestLogin()" />
+              <button class="primaryButton" :disabled="loading" @click="requestLogin()">
+                {{ loading ? "..." : "Request Code" }}
+              </button>
+              <div class="mt-4">
+                New here?
+                <button class="secondaryButton" @click="registerView = true; error = null;">
+                  Register
+                </button>  
+              </div>
+            </template>  
+          </template>    
+        </section>
+      </div>  
+    </form>      
+  </div>
+</template>
 
 <style scoped>
 button {
@@ -225,6 +259,5 @@ button {
 }
 .secondaryButton {
   color: darkblue;
-  margin-top: 1em;
 }
 </style>

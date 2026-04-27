@@ -3,6 +3,7 @@ import type { Place } from "~~/shared/place.type";
 
 export function useApi() {
   const user = useUser();
+  const visitedPlaces = useVisitedPlaces();
 
   // registers a new user
   async function register(email: string, username: string): Promise<void> {
@@ -57,6 +58,12 @@ export function useApi() {
     return data;
   }
 
+  // query places by visited uuids array
+  async function fetchVisitedPlaces(): Promise<Place[]> {
+    const data = await $fetch<Place[]>("/api/places/visited", { method: "POST", body: { visited: visitedPlaces.value.values().toArray() } });
+    return data;
+  };
+
   // fetch own votes
   async function fetchVotes(): Promise<Map<UUID, boolean>> {
     if (!user.value) throw "must be logged in";
@@ -103,6 +110,7 @@ export function useApi() {
     login,
     fetchPlaces,
     searchPlaces,
+    fetchVisitedPlaces,
     fetchVotes,
     vote,
   };
