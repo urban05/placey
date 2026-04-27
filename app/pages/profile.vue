@@ -5,6 +5,7 @@ import type { Place } from "~~/shared/place.type";
 const api = useApi();
 const user = useUser();
 const votes = useVotes();
+const visitedPlaces = useVisitedPlaces();
 const places = ref<Place[] | null>(null);
 
 const loading = ref(false);
@@ -28,7 +29,7 @@ const showModal = ref(false);
 const placeSearch = ref("");
 
 onMounted(async () => {
-  places.value = await api.fetchVisitedPlaces();
+  places.value = await visitedPlaces.getPlaces();
 });
 
 const filteredPlaces = computed(() => places.value?.filter((v, _) => v.name.toLowerCase().includes(placeSearch.value.toLowerCase()) ?? []));

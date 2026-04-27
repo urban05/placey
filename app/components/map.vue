@@ -64,7 +64,7 @@ const sortedPlaces = computed(() => {
     .sort((a, b) => a.y - b.y);
 });
 
-const visitedPlaces = useVisitedPlaces();
+const { visitedPlaces } = useVisitedPlaces();
 
 const lastQueryLocation = useState<{
   latitude: number;

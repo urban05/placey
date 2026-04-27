@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-const visitedPlaces = useVisitedPlaces();
+const { visitedPlaces } = useVisitedPlaces();
 const place = useCurrentPlace();
 const place_image = computed(() => place.value?.image ?? "placeholder.svg");
 

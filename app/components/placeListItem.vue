@@ -19,7 +19,7 @@
 import type { Place } from '~~/shared/place.type';
 
 const props = defineProps<{ place: Place }>();
-const visitedPlaces = useVisitedPlaces();
+const { visitedPlaces } = useVisitedPlaces();
 const currentPlace = useCurrentPlace();
 const place_image = computed(() => props.place.image ?? "placeholder.svg");
 

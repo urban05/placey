@@ -3,7 +3,6 @@ import type { Place } from "~~/shared/place.type";
 
 export function useApi() {
   const user = useUser();
-  const visitedPlaces = useVisitedPlaces();
 
   // registers a new user
   async function register(email: string, username: string): Promise<void> {
@@ -59,8 +58,8 @@ export function useApi() {
   }
 
   // query places by visited uuids array
-  async function fetchVisitedPlaces(): Promise<Place[]> {
-    const data = await $fetch<Place[]>("/api/places/visited", { method: "POST", body: { visited: visitedPlaces.value.values().toArray() } });
+  async function fetchVisitedPlaces(places: UUID[]): Promise<Place[]> {
+    const data = await $fetch<Place[]>("/api/places/visited", { method: "POST", body: { visited: places } });
     return data;
   };
 

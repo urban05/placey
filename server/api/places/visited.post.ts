@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
     visited: UUID[];
   } = await readBody(event);
 
-  console.log(body.visited);
   const sql = usePostgres();
   const result: Place[] = await sql`
     SELECT p.id, p.name, p.icon, p.verified, p.address, p.description, ST_Y(p.cords::geometry) AS latitude, ST_X(p.cords::geometry) AS longitude, p.image, COALESCE(SUM(v.vote), 0) AS votes
