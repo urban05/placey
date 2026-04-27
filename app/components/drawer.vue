@@ -18,12 +18,10 @@ const isDragging = ref(false);
 const dragStartY = ref(0);
 const dragStartHeight = ref(0);
 
-const { width, height } = useWindowSize()
-const paddingTop = computed(() => Math.max(Math.round(height.value * currentHeight.value / 100) - height.value + parseFloat(getComputedStyle(document.body).fontSize) * 4, 0));
-
 const drawerStyle = computed(() => ({
   height: `${currentHeight.value}vh`,
-  paddingTop: `${paddingTop.value}px`,
+  '--drawer-height': currentHeight.value,
+  paddingTop: 'max(calc(var(--drawer-height) * 1vh - 100vh + 4rem), 0px)',
   borderRadius: isFullscreen.value ? '0' : '16px'
 }));
 
