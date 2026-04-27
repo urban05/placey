@@ -32,18 +32,19 @@ export function usePlaces() {
   const throttledSearchPlaces = useThrottleFn(searchPlaces, 500, true);
 
   async function fetch(): Promise<void> {
-    if (query.value
-    ) {
+    if (query.value) {
       await throttledSearchPlaces(userLocation.value, query.value);
-
-    }
-    else {
+    } else {
       await throttledFetchPlaces(userLocation.value);
     }
   }
 
   return {
     places: readonly(places),
-    fetch
+    fetch,
   };
+}
+
+export function usePlacesRaw() {
+  return useState<Place[]>("places", () => []);
 }

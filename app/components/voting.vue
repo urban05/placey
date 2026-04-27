@@ -43,8 +43,7 @@
 <script lang="ts" setup>
 import type { Place } from "~~/shared/place.type";
 
-const api = useApi();
-const votes = useVotes();
+const { votes, fetch, vote } = useVotes();
 const user = useUser();
 
 const props = defineProps<{
@@ -69,21 +68,17 @@ const isLoggedIn = computed(() => {
 
 function toggleUpvote() {
   if (isUpvoted.value) {
-    api.vote(props.place.id, null);
-    votes.value.delete(props.place.id);
+    vote(props.place.id, null);
   } else {
-    api.vote(props.place.id, true);
-    votes.value.set(props.place.id, true);
+    vote(props.place.id, true);
   }
 }
 
 function toggleDownvote() {
   if (isDownvoted.value) {
-    api.vote(props.place.id, null);
-    votes.value.delete(props.place.id);
+    vote(props.place.id, null);
   } else {
-    api.vote(props.place.id, false);
-    votes.value.set(props.place.id, false);
+    vote(props.place.id, false);
   }
 }
 </script>
