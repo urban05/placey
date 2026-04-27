@@ -187,7 +187,7 @@ async function login() {
     loading.value = true;
     error.value = null;
     await api.login(email.value, otp.value);
-    votes.value = await api.fetchVotes();
+    votes.fetch();
     loading.value = false;
   } catch (e) {
     loading.value = false;
