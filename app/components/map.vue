@@ -50,6 +50,9 @@ onMounted(async () => {
       heading: map.value!.getBearing()!,
     };
   });
+
+  // fetch places initially
+  fetch();
 });
 
 // needed to z-sort markers
