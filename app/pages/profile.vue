@@ -23,7 +23,7 @@ const otpSendedTime = ref(Date.now());
 const otpSendedElapsed = computed(() => now.value.getTime() - otpSendedTime.value);
 const otpSendAllow = computed(() => otpSendedElapsed.value > otpTimeout);
 
-const modalRef = useTemplateRef('modalRef')
+const modalRef = useTemplateRef('modalRef');
 const showModal = ref(false);
 
 const placeSearch = ref("");
@@ -181,64 +181,68 @@ onUnmounted(() => document.removeEventListener('click', onDocClick));
       backgroundSize: '2em 2em',
     }"
   >
-    <form class="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
-      <div class="p-8">
-        <NuxtLink to="/" class="text-xs">Back to home</NuxtLink>
-        <h2 class="text-center text-3xl font-extrabold">
-          {{ registerView ? "Register" : "Welcome Back" }}
-        </h2>
-        <section class="flex flex-col px-4 mt-8">
-          <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
-          <template v-if="otpView && email !== ''">
-            <MsgBox type="info" class="mb-4">
-              Please enter the code we have send you to your email address.
-            </MsgBox>
-            <IconInput v-model="otp" icon-name="" placeholder="OTP token" @submit="login()" />
-            <button @click="login()" class="primaryButton" :disabled="loading">
-              {{ loading ? "..." : "Login" }}
+    <form class="w-full max-w-lg mx-auto p-8 bg-white rounded-lg shadow-xl overflow-hidden">
+      <NuxtLink to="/" class="text-xs">Back to home</NuxtLink>
+      <h2 class="text-center text-3xl font-extrabold">
+        {{ registerView ? "Register" : "Welcome Back" }}
+      </h2>
+      <section class="flex flex-col px-4 mt-8">
+        <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
+
+        <!-- login: otp -->
+        <template v-if="otpView && email !== ''">
+          <MsgBox type="info" class="mb-4">
+            Please enter the code we have send you to your email address.
+          </MsgBox>
+          <IconInput v-model="otp" icon-name="" placeholder="OTP token" @submit="login()" />
+          <button @click="login()" class="primaryButton" :disabled="loading">
+            {{ loading ? "..." : "Login" }}
+          </button>
+          <div class="mt-4">
+            Didn't worked?
+            <button
+              v-if="otpSendAllow"
+              class="secondaryButton"
+              type="button"
+              @click="requestLogin()"
+            >
+              Resend Code
+            </button>
+            <span v-else>Resend Code in {{ Math.ceil((otpTimeout - otpSendedElapsed) / 1000) }}</span>
+          </div>
+        </template>
+
+        <template v-else>
+          <!-- login: register -->
+          <template v-if="registerView">
+            <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email" type="email" />
+            <IconInput v-model="username" icon-name="twemoji:bust-in-silhouette" placeholder="Username" @submit="register()" />
+            <button class="primaryButton" :disabled="loading" @click="register()">
+              {{ loading ? "..." : "Register" }}
             </button>
             <div class="mt-4">
-              Didn't worked?
-              <button
-                v-if="otpSendAllow"
-                class="secondaryButton"
-                type="button"
-                @click="requestLogin()"
-              >
-                Resend Code
+              Already have an account?
+                <button class="secondaryButton" @click="registerView = false; error = null;">
+                Login instead
               </button>
-              <span v-else>Resend Code in {{ Math.ceil((otpTimeout - otpSendedElapsed) / 1000) }}</span>
+            </div>
+          </template>
+
+          <!-- login: login -->
+          <template v-else>
+            <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email" type="email" @submit="requestLogin()" autofocus />
+            <button class="primaryButton" :disabled="loading" @click="requestLogin()">
+              {{ loading ? "..." : "Request Code" }}
+            </button>
+            <div class="mt-4">
+              New here?
+                <button class="secondaryButton" @click="registerView = true; error = null;">
+                Register
+              </button>  
             </div>
           </template>  
-          <template v-else>
-            <template v-if="registerView">
-              <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email" type="email" />
-              <IconInput v-model="username" icon-name="twemoji:bust-in-silhouette" placeholder="Username" @submit="register()" />
-              <button class="primaryButton" :disabled="loading" @click="register()">
-                {{ loading ? "..." : "Register" }}
-              </button>
-              <div class="mt-4">
-                Already have an account?
-                <button class="secondaryButton" @click="registerView = false; error = null;">
-                  Login instead
-                </button>
-              </div>  
-            </template>  
-            <template v-else>
-              <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email" type="email" @submit="requestLogin()" />
-              <button class="primaryButton" :disabled="loading" @click="requestLogin()">
-                {{ loading ? "..." : "Request Code" }}
-              </button>
-              <div class="mt-4">
-                New here?
-                <button class="secondaryButton" @click="registerView = true; error = null;">
-                  Register
-                </button>  
-              </div>
-            </template>  
-          </template>    
-        </section>
-      </div>  
+        </template>    
+      </section>
     </form>      
   </div>
 </template>
