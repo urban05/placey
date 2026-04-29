@@ -23,9 +23,6 @@ const otpSendedTime = ref(Date.now());
 const otpSendedElapsed = computed(() => now.value.getTime() - otpSendedTime.value);
 const otpSendAllow = computed(() => otpSendedElapsed.value > otpTimeout);
 
-const modalRef = useTemplateRef('modalRef');
-const showModal = ref(false);
-
 const placeSearch = ref("");
 
 onMounted(async () => {
@@ -99,6 +96,8 @@ async function login() {
     await api.login(email.value, otp.value);
     votes.fetch();
     loading.value = false;
+    otpView.value = false;
+    registerView.value = false;
   } catch (e) {
     loading.value = false;
     if (e instanceof FetchError) {
@@ -110,46 +109,12 @@ async function login() {
     console.log("error while requesting login:", e);
   }
 }
-
-function logout() {
-  user.value = null;
-  otpView.value = false;
-  registerView.value = false;
-}
-
-function onDocClick(e: any) {
-  if (showModal.value && !e.target.contains(modalRef.value))
-  showModal.value = false;
-}
-
-watch(showModal, (newValue) => {
-  if (newValue) setTimeout(() => document.addEventListener('click', onDocClick), 0);
-  else document.removeEventListener('click', onDocClick);
-});
-
-onUnmounted(() => document.removeEventListener('click', onDocClick));
 </script>
 
 <template @click="showModal = false">
-  <!-- settings modal -->
-  <div v-if="showModal && user !== null" ref="modalRef" class="fixed top-22 right-4 w-50 p-2 flex flex-col gap-2 bg-white rounded-lg shadow">
-    <NuxtLink to="/settings" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
-      <Icon name="twemoji:gear" class="size-5" />
-      <div class="font-semibold">Settings</div>
-    </NuxtLink>  
-    <button class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]" @click="logout()">
-      <Icon name="twemoji:ladder" class="size-5" />
-      <div class="font-semibold">Log out</div>
-    </button>
-  </div>
-
   <!-- main -->
   <div v-if="user" class="w-screen h-screen p-4 flex flex-col">
-    <section class="flex justify-between items-start">
-      <NuxtLink to="/" class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow"><Icon name="twemoji:back-arrow" size="25" /></NuxtLink>
-      <div class="self-center text-2xl font-bold">Profile</div>
-      <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow" @click="showModal = true"><Icon name="twemoji:gear" size="30" /></button>
-    </section>
+    <NonIndexHeader title="Profile" />
     <section class="flex gap-8 px-4 py-12 items-stretch">
       <img src="../assets/placey-happy.webp" class="h-20 aspect-square p-2 border border-gray-200 rounded-full" />
       <div class="grow flex flex-col items-center">

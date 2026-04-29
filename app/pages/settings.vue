@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="p-4">
+    <NonIndexHeader title="Settings" />
     Settings
   </div>
 </template>
