@@ -18,7 +18,7 @@ VALUES
     'twemoji:books',
     true,
     'Vogelhüttendeich 45, 21107 Hamburg',
-    null
+    'places/buecherhalle.jpg'
   ),
   (
     '3eb59bcc-e6e0-4571-ba7b-97b1d6ff4275',
@@ -28,7 +28,7 @@ VALUES
     'twemoji:deciduous-tree',
     false,
     'Am Inselpark, 21109 Hamburg',
-    null
+    'places/inselpark.jpg'
   ),
   (
     '8c78f375-c41f-459a-bcc0-98a9e863b8de',
@@ -38,7 +38,7 @@ VALUES
     'twemoji:people-holding-hands',
     true,
     'Rotenhäuser Damm 58, 21107 Hamburg',
-    null
+    'places/haus_zur_jugend.jpg'
   ),
   (
     'de4ec082-0be9-4181-af1f-9158144a9355',
@@ -48,7 +48,7 @@ VALUES
     'twemoji:people-holding-hands',
     true,
     'Krieterstraße 11, 21109 Hamburg',
-    null
+    'places/haus_der_jugend_2.jpg'
   ),
   (
     'a9b883fd-7949-4d21-82b9-7ca820a476c8',
@@ -58,7 +58,7 @@ VALUES
     'twemoji:performing-arts',
     true,
     'Industriestraße 125-131, 21107 Hamburg',
-    null
+    'places/honigfabrik.jpg'
   ),
   (
     '74d139e2-7959-4d33-bc66-23e24ad8286f',
@@ -68,7 +68,7 @@ VALUES
     'twemoji:soccer-ball',
     false,
     'Karl-Arnold-Ring 15a, 21109 Hamburg',
-    null
+    'places/sportverein.jpg'
   ),
   (
     '84f3a4a7-9aa8-484c-afb7-c8d3dbea27bc',
@@ -78,7 +78,7 @@ VALUES
     'twemoji:school',
     true,
     'Krieterstraße 2d, 21109 Hamburg',
-    null
+    'places/tor_zur_welt.jpg'
   ),
   (
     '51e0b0e4-1e70-4547-a315-84ddb470463d',
@@ -88,7 +88,7 @@ VALUES
     'twemoji:school',
     true,
     'Karl-Arnold-Ring 13, 21109 Hamburg',
-    null
+    'places/burgweide.jpg'
   ),
   (
     'aa9fd5d4-af49-4397-ae04-ecd3c4aa0469',
@@ -98,7 +98,7 @@ VALUES
     'twemoji:church',
     true,
     'Eckermannstraße 1a, 21107 Hamburg',
-    null
+    'places/emmauskirche.jpg'
   ),
   (
     '82dbad2f-af27-4461-9548-16a8653eb0cd',
@@ -108,7 +108,7 @@ VALUES
     'twemoji:church',
     true,
     'Jungnickelstraße 21, 21109 Hamburg',
-    null
+    'places/kreuzkirche_kirchdorf.jpg'
   ),
   (
     '2ddcb4d1-626a-42d8-a46f-1cf965a02f20',
