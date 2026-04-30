@@ -3,8 +3,9 @@ import mapConfig from "@/assets/map_config.json";
 import maplibregl from "maplibre-gl";
 import maplibre from "maplibre-gl";
 
-const props = defineProps<{ bottomMargin: number }>();
-const bottomMarginComputed = computed(() => `calc(${props.bottomMargin}vh + 1em)`)
+const { topMargin = 10, bottomMargin = 0 } = defineProps<{ topMargin?: number, bottomMargin?: number }>();
+const bottomMarginComputed = computed(() => `calc(${bottomMargin}vh + 1em)`);
+const topMarginComputed = computed(() => `${topMargin}px`);
 
 const { places, fetch } = usePlaces();
 const map = useMap();
@@ -114,7 +115,7 @@ watch(() => {
 
 <style scoped>
 :deep(.maplibregl-ctrl-group) {
-  margin-top: 100px !important;
+  margin-top: v-bind('topMarginComputed') !important;
   border-radius: 50vh !important;
   overflow: hidden !important;
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Map class="fixed top-0 h-screen" :bottom-margin="drawerDefaultCoverage" />
+    <Map class="fixed top-0 h-screen" :top-margin="100" :bottom-margin="drawerDefaultCoverage" />
 
     <Navbar class="fixed top-0 w-full" />
 
