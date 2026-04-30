@@ -16,6 +16,11 @@ const el = ref<HTMLDivElement | null>(null);
 onMounted(() => {
   if (!map.value || !el.value) return;
 
+  zoom.value = map.value.getZoom()!;
+  map.value.on("zoom", () => {
+    zoom.value = map.value.getZoom()!;
+  });
+
   marker = new maplibregl.Marker({
     element: el.value,
     anchor: "bottom",
@@ -36,12 +41,8 @@ onBeforeUnmount(() => {
   marker?.remove();
 });
 
-const zoom = ref(map.value.getZoom()!);
+const zoom = ref(0);
 const size = computed(() => 40 * Math.pow(1.2, zoom.value - 13));
-
-map.value.on("zoom", () => {
-  zoom.value = map.value.getZoom()!;
-});
 </script>
 
 <template>
