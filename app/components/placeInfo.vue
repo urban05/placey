@@ -1,5 +1,5 @@
 <template>
-  <div v-if="place" class="h-full">
+  <div v-if="currentPlace" class="h-full">
     <div class="h-full flex flex-row gap-2">
       <div class="grow overflow-y-scroll pr-2 pb-4 flex flex-col gap-4">
         <img
@@ -8,21 +8,25 @@
         />
         <div class="flex flex-row gap-2 items-center">
           <Icon
-            :name="place.icon"
+            :name="currentPlace.icon"
             size="50"
             :style="
-              visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''
+              visitedPlaces.has(currentPlace.id)
+                ? 'filter: url(\'#shimmer\')'
+                : ''
             "
           />
-          <h3 class="font-semibold text-gray-900">{{ place.name }}</h3>
+          <h3 class="font-semibold text-gray-900">{{ currentPlace.name }}</h3>
           <Icon
-            v-if="place.verified"
+            v-if="currentPlace.verified"
             name="twemoji:check-mark-button"
             size="20"
           />
         </div>
-        <p class="text-sm text-gray-800">{{ place.description }}</p>
-        <div class="text-center text-sm text-gray-600">{{ place.address }}</div>
+        <p class="text-sm text-gray-800">{{ currentPlace.description }}</p>
+        <div class="text-center text-sm text-gray-600">
+          {{ currentPlace.address }}
+        </div>
       </div>
       <div class="flex flex-col gap-4">
         <button
@@ -31,7 +35,7 @@
         >
           <div class="font-bold">X</div>
         </button>
-        <Voting :place="place" />
+        <Voting :place="currentPlace" />
       </div>
     </div>
   </div>
@@ -39,11 +43,13 @@
 
 <script lang="ts" setup>
 const { visitedPlaces } = useVisitedPlaces();
-const place = useCurrentPlace();
-const place_image = computed(() => place.value?.image ?? "placeholder.svg");
+const { currentPlace, setCurrentPlace } = useCurrentPlace();
+const place_image = computed(
+  () => currentPlace.value?.image ?? "placeholder.svg",
+);
 
 function onCloseClick() {
-  place.value = null;
+  setCurrentPlace(null);
 }
 </script>
 

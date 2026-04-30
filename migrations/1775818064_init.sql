@@ -24,12 +24,14 @@ CREATE TABLE
   votes (
     place_id UUID REFERENCES places (id),
     user_id UUID REFERENCES users (id),
-    vote INTEGER
+    vote INTEGER,
+    PRIMARY KEY (place_id, user_id)
   );
 
 CREATE TABLE
   users_place (
     place_id UUID REFERENCES places (id),
     user_id UUID REFERENCES users (id),
-    first_visit TIMESTAMPTZ
+    first_visit TIMESTAMPTZ,
+    PRIMARY KEY (place_id, user_id)
   );

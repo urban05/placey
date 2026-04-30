@@ -42,7 +42,7 @@ import type { Place } from "~~/shared/place.type";
 
 const props = defineProps<{ place: Place }>();
 const { visitedPlaces } = useVisitedPlaces();
-const currentPlace = useCurrentPlace();
+const { setCurrentPlace } = useCurrentPlace();
 const place_image = computed(() => props.place.image ?? "placeholder.svg");
 
 const tbs = 0.5; // text border size
@@ -52,6 +52,6 @@ const text_border = computed(
 );
 
 function onPlaceClick() {
-  currentPlace.value = props.place;
+  setCurrentPlace(props.place.id);
 }
 </script>

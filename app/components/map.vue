@@ -3,14 +3,17 @@ import mapConfig from "@/assets/map_config.json";
 import maplibregl from "maplibre-gl";
 import maplibre from "maplibre-gl";
 
-const { topMargin = 10, bottomMargin = 0 } = defineProps<{ topMargin?: number, bottomMargin?: number }>();
+const { topMargin = 10, bottomMargin = 0 } = defineProps<{
+  topMargin?: number;
+  bottomMargin?: number;
+}>();
 const bottomMarginComputed = computed(() => `calc(${bottomMargin}vh + 1em)`);
 const topMarginComputed = computed(() => `${topMargin}px`);
 
 const { places, fetch } = usePlaces();
 const map = useMap();
 const userLocation = useUserLocation();
-const currentPlace = useCurrentPlace();
+const { setCurrentPlace } = useCurrentPlace();
 
 provide("map", map);
 
@@ -95,34 +98,41 @@ function shouldQueryNewPlaces(newLocation: {
   return distanceInMeters > 500;
 }
 
-watch(() => {
-  return {
-    latitude: userLocation.value.latitude,
-    longitude: userLocation.value.longitude
-  }
-}, (location) => {
-  if (shouldQueryNewPlaces(location)) fetch()
-})
-
+watch(
+  () => {
+    return {
+      latitude: userLocation.value.latitude,
+      longitude: userLocation.value.longitude,
+    };
+  },
+  (location) => {
+    if (shouldQueryNewPlaces(location)) fetch();
+  },
+);
 </script>
 
 <template>
   <div id="map" class="relative size-full z-0">
-    <Marker v-for="place in sortedPlaces" :lng-lat="[place.longitude, place.latitude]" :icon="place.icon"
-      :is-shiny="visitedPlaces.has(place.id)" @click="currentPlace = place" />
+    <Marker
+      v-for="place in sortedPlaces"
+      :lng-lat="[place.longitude, place.latitude]"
+      :icon="place.icon"
+      :is-shiny="visitedPlaces.has(place.id)"
+      @click="setCurrentPlace(place.id)"
+    />
     <slot />
   </div>
 </template>
 
 <style scoped>
 :deep(.maplibregl-ctrl-group) {
-  margin-top: v-bind('topMarginComputed') !important;
+  margin-top: v-bind("topMarginComputed") !important;
   border-radius: 50vh !important;
   overflow: hidden !important;
 }
 
 :deep(.maplibregl-ctrl-attrib) {
-  margin-bottom: v-bind('bottomMarginComputed') !important;
+  margin-bottom: v-bind("bottomMarginComputed") !important;
   transition-duration: 0.3s;
 }
 </style>

@@ -5,6 +5,8 @@ export function useVotes() {
     return new Map<UUID, boolean>();
   });
 
+  if (votes.value.size == 0) setTimeout(fetch, 0);
+
   const api = useApi();
   const places = usePlacesRaw();
 
