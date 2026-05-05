@@ -26,11 +26,19 @@ onUnmounted(() => document.removeEventListener('click', onDocClick));
 
 <template>
   <!-- settings modal -->
-  <div v-if="showModal" ref="modalRef" class="fixed top-22 right-4 w-50 p-2 flex flex-col gap-2 bg-white rounded-lg shadow">
+  <div v-if="showModal" ref="modalRef" class="fixed top-22 right-4 w-50 p-2 flex flex-col gap-2 bg-white rounded-lg shadow z-10">
+    <NuxtLink to="/profile" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
+      <img src="../assets/placey-happy.webp" class="size-5" />
+      <div class="font-semibold">Profile</div>
+    </NuxtLink>
     <NuxtLink to="/settings" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
       <Icon name="twemoji:gear" class="size-5" />
       <div class="font-semibold">Settings</div>
-    </NuxtLink>    
+    </NuxtLink>
+    <NuxtLink to="/contribute" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
+      <Icon name="twemoji:plus" class="size-5" />
+      <div class="font-semibold">Contribute</div>
+    </NuxtLink>  
     <button class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]" @click="logout()">
       <Icon name="twemoji:ladder" class="size-5" />
       <div class="font-semibold">Log out</div>
