@@ -46,6 +46,10 @@ onMounted(async () => {
     };
   });
 
+  map.value.on("drag", () => {
+    setCurrentPlace(null)
+  })
+
   map.value.on("rotate", () => {
     const center = map.value!.getCenter();
     userLocation.value = {
@@ -113,13 +117,8 @@ watch(
 
 <template>
   <div id="map" class="relative size-full z-0">
-    <Marker
-      v-for="place in sortedPlaces"
-      :lng-lat="[place.longitude, place.latitude]"
-      :icon="place.icon"
-      :is-shiny="visitedPlaces.has(place.id)"
-      @click="setCurrentPlace(place.id)"
-    />
+    <Marker v-for="place in sortedPlaces" :lng-lat="[place.longitude, place.latitude]" :icon="place.icon"
+      :is-shiny="visitedPlaces.has(place.id)" @click="setCurrentPlace(place.id)" />
     <slot />
   </div>
 </template>
