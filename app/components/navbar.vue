@@ -1,7 +1,8 @@
 <template>
-  <nav class="flex flex-row justify-center p-2 gap-2 h-16 z-100 md:px-24">
+  <nav class="flex flex-row justify-center p-2 gap-2 h-16 z-100 md:px-24 pointer-events-none">
     <PlaceSearch class="w-full" />
-    <NuxtLink to="/contribute" class="aspect-square bg-white shadow-lg rounded-full flex justify-center place-items-center">
+    <NuxtLink to="/contribute"
+      class="aspect-square bg-white shadow-lg rounded-full flex justify-center place-items-center">
       <Icon name="twemoji:plus" size="30" />
     </NuxtLink>
     <NuxtLink to="/profile"
