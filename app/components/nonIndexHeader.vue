@@ -50,7 +50,7 @@ onUnmounted(() => document.removeEventListener('click', onDocClick));
     <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow cursor-pointer"><Icon name="twemoji:back-arrow" size="25" @click="router.back()" /></button>
     <div class="self-center text-2xl font-bold">{{ props.title }}</div>
     <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow cursor-pointer" @click="showModal = true"><Icon name="twemoji:gear" size="30" /></button>
-  </section>    
+  </section>
 </template>
 
 <style>
