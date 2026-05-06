@@ -10,7 +10,7 @@
           maskImage: 'linear-gradient(to right, transparent 0%, black 100%)',
         }"
       />
-      <div class="flex flex-col gap-2 p-2 text-left w-3/5">
+      <div class="flex flex-col gap-2 p-2 text-left">
         <div class="flex gap-4 items-center z-2">
           <Icon
             :name="place.icon"
@@ -18,17 +18,19 @@
             :style="
               visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''
             "
+            class="shrink-0"
           />
-          <h3 class="font-semibold text-gray-900" :style="text_border">
+          <h3 class="font-semibold text-gray-900 grow" :style="text_border">
             {{ place.name }}
           </h3>
           <Icon
             v-if="place.verified"
             name="twemoji:check-mark-button"
             size="20"
+            class="shrink-0"
           />
         </div>
-        <p class="text-sm text-gray-600" :style="text_border">
+        <p class="text-sm text-gray-600 w-3/5" :style="text_border">
           {{ place.description }}
         </p>
       </div>
