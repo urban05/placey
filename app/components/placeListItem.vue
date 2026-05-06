@@ -18,9 +18,8 @@
             :style="
               visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''
             "
-            class="shrink-0"
           />
-          <h3 class="font-semibold text-gray-900 grow" :style="text_border">
+          <h3 class="font-semibold text-gray-900" :style="text_border">
             {{ place.name }}
           </h3>
           <Icon
