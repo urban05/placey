@@ -58,8 +58,14 @@ export function useApi() {
   }
 
   // query places by visited uuids array
-  async function fetchVisitedPlaces(places: UUID[]): Promise<Place[]> {
-    const data = await $fetch<Place[]>("/api/places/visited", { method: "POST", body: { visited: places } });
+  async function fetchVisitedPlaces(): Promise<Place[]> {
+    if (!user.value) throw "must be logged in";
+
+    const data = await $fetch<Place[]>("/api/places/visited", {
+      method: "GET", headers: {
+        authorization: `Bearer ${user.value?.token}`,
+      },
+    });
     return data;
   };
 
