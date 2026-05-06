@@ -11,9 +11,9 @@
           <h3 class="font-semibold text-gray-900" :style="text_border">
             {{ place.name }}
           </h3>
-          <Icon v-if="place.verified" name="twemoji:check-mark-button" size="20" />
+          <Icon v-if="place.verified" name="twemoji:check-mark-button" size="20" class="shrink-0" />
         </div>
-        <p class="text-sm text-gray-600" :style="text_border">
+        <p class="text-sm text-gray-600 w-3/5" :style="text_border">
           {{ place.description }}
         </p>
       </div>
