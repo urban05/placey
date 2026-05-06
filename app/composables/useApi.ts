@@ -103,6 +103,16 @@ export function useApi() {
     });
   }
 
+  // gets the objectstorage bucket url
+  async function fetchBucketUrl(): Promise<string> {
+    const response = await $fetch(`/api/bucket`, {
+      method: "GET"
+    });
+
+    if (!response) throw "error fetching bucket url";
+    return response
+  }
+
   return {
     register,
     requestLogin,
@@ -112,5 +122,6 @@ export function useApi() {
     fetchVisitedPlaces,
     fetchVotes,
     vote,
+    fetchBucketUrl
   };
 }
