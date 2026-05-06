@@ -75,7 +75,7 @@ const sortedPlaces = computed(() => {
     .sort((a, b) => a.y - b.y);
 });
 
-const { visitedPlaces } = useVisitedPlaces();
+const { visitedPlaceIds } = useVisitedPlaces();
 
 const lastQueryLocation = useState<{
   latitude: number;
@@ -118,7 +118,7 @@ watch(
 <template>
   <div id="map" class="relative size-full z-0">
     <Marker v-for="place in sortedPlaces" :lng-lat="[place.longitude, place.latitude]" :icon="place.icon"
-      :is-shiny="visitedPlaces.has(place.id)" @click="setCurrentPlace(place.id)" />
+      :is-shiny="visitedPlaceIds.has(place.id)" @click="setCurrentPlace(place.id)" />
     <slot />
   </div>
 </template>

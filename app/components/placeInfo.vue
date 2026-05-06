@@ -5,7 +5,7 @@
         <BucketImage class="block max-w-full max-h-[50%] w-full h-auto self-center shrink-0 object-cover"
           :src="place_image" />
         <div class="flex flex-row gap-2 items-center">
-          <Icon :name="currentPlace.icon" size="50" :style="visitedPlaces.has(currentPlace.id)
+          <Icon :name="currentPlace.icon" size="50" :style="visitedPlaceIds.has(currentPlace.id)
             ? 'filter: url(\'#shimmer\')'
             : ''
             " />
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-const { visitedPlaces } = useVisitedPlaces();
+const { visitedPlaceIds } = useVisitedPlaces();
 const { currentPlace, setCurrentPlace } = useCurrentPlace();
 const place_image = computed(
   () => currentPlace.value?.image ?? "placeholder.svg",

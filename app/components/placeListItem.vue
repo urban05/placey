@@ -6,7 +6,7 @@
       }" />
       <div class="flex flex-col gap-2 p-2 text-left w-3/5">
         <div class="flex gap-4 items-center z-2">
-          <Icon :name="place.icon" size="50" :style="visitedPlaces.has(place.id) ? 'filter: url(\'#shimmer\')' : ''
+          <Icon :name="place.icon" size="50" :style="visitedPlaceIds.has(place.id) ? 'filter: url(\'#shimmer\')' : ''
             " />
           <h3 class="font-semibold text-gray-900" :style="text_border">
             {{ place.name }}
@@ -26,7 +26,7 @@
 import type { Place } from "~~/shared/place.type";
 
 const props = defineProps<{ place: Place }>();
-const { visitedPlaces } = useVisitedPlaces();
+const { visitedPlaceIds } = useVisitedPlaces();
 const { setCurrentPlace } = useCurrentPlace();
 const place_image = computed(() => props.place.image ?? "placeholder.svg");
 
