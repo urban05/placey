@@ -147,7 +147,7 @@ async function login() {
     }"
   >
     <form class="w-full max-w-lg mx-auto p-8 bg-white rounded-lg shadow-xl overflow-hidden">
-      <NuxtLink to="/" class="text-xs">Back to home</NuxtLink>
+      <NuxtLink to="/" class="text-xs"><Icon name="twemoji:back-arrow" size="25" /></NuxtLink>
       <h2 class="text-center text-3xl font-extrabold">
         {{ registerView ? "Register" : "Welcome Back" }}
       </h2>
