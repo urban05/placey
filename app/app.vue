@@ -1,5 +1,6 @@
 <template>
   <NuxtLayout>
+    <ExternalLinkModal />
     <NuxtPage />
   </NuxtLayout>
 </template>

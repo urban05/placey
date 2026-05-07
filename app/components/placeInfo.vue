@@ -1,3 +1,16 @@
+<script lang="ts" setup>
+const { visitedPlaceIds } = useVisitedPlaces();
+const { currentPlace, setCurrentPlace } = useCurrentPlace();
+const place_image = computed(
+  () => currentPlace.value?.image ?? "placeholder.svg",
+);
+const osm_link = computed(() => `https://www.openstreetmap.org/directions?to=${currentPlace.value?.latitude},${currentPlace.value?.longitude}`);
+
+function onCloseClick() {
+  setCurrentPlace(null);
+}
+</script>
+
 <template>
   <div v-if="currentPlace" class="h-full">
     <div class="h-full flex flex-row gap-2">
@@ -8,35 +21,28 @@
           <Icon :name="currentPlace.icon" size="50" :style="visitedPlaceIds.has(currentPlace.id)
             ? 'filter: url(\'#shimmer\')'
             : ''
-            " />
+            " />  
           <h3 class="font-semibold text-gray-900">{{ currentPlace.name }}</h3>
           <Icon v-if="currentPlace.verified" name="twemoji:check-mark-button" size="20" />
-        </div>
+        </div>  
         <p class="text-sm text-gray-800">{{ currentPlace.description }}</p>
         <div class="text-center text-sm text-gray-600">
           {{ currentPlace.address }}
-        </div>
-      </div>
+        </div>  
+      </div>  
       <div class="flex flex-col gap-4">
         <button class="aspect-square size-8 relative rounded-full shadow-lg bg-white" @click="onCloseClick">
           <div class="font-bold">X</div>
-        </button>
+        </button>  
         <Voting :place="currentPlace" />
-      </div>
-    </div>
-  </div>
+        <ExternalLink :link="osm_link">
+          <div class="aspect-square size-8 relative rounded-full shadow-lg bg-white cursor-pointer flex justify-center items-center">
+            <Icon name="twemoji:compass" />
+          </div>
+        </ExternalLink>
+      </div>  
+    </div>  
+  </div>    
 </template>
-
-<script lang="ts" setup>
-const { visitedPlaceIds } = useVisitedPlaces();
-const { currentPlace, setCurrentPlace } = useCurrentPlace();
-const place_image = computed(
-  () => currentPlace.value?.image ?? "placeholder.svg",
-);
-
-function onCloseClick() {
-  setCurrentPlace(null);
-}
-</script>
 
 <style></style>
