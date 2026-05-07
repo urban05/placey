@@ -7,7 +7,6 @@ const props = defineProps<{ link: string }>();
 <template>
   <a
     :href="link"
-    class="aspect-square size-8 relative rounded-full shadow-lg bg-white cursor-pointer flex justify-center items-center"
     @click="(e: any) => {e.preventDefault(); show(link);}"
   >
     <slot />
