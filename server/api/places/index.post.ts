@@ -3,6 +3,7 @@ import { checkAuth } from "../../utils/auth";
 import { usePostgres } from "../../utils/postgres";
 import { useS3 } from "~~/server/utils/s3";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { Place } from "~~/shared/place.type";
 
 export default defineEventHandler(async (event) => {
     const userId = checkAuth(event);
@@ -57,5 +58,16 @@ export default defineEventHandler(async (event) => {
       VALUES (${id}, ${body.name}, ST_MakePoint (${body.longitude}, ${body.latitude}), ${body.icon}, false, ${body.address}, ${body.description}, ${filename})
     `;
 
-    return result
+    return {
+        address: body.address,
+        description: body.description,
+        icon: body.icon,
+        id,
+        image: filename,
+        latitude: body.latitude,
+        longitude: body.longitude,
+        name: body.name,
+        verified: false,
+        votes: 0
+    } as Place
 });

@@ -31,7 +31,7 @@ function onCloseClick() {
         </div>  
       </div>  
       <div class="flex flex-col gap-4">
-        <button class="aspect-square size-8 relative rounded-full shadow-lg bg-white" @click="onCloseClick">
+        <button class="aspect-square size-8 relative rounded-full shadow-lg bg-white cursor-pointer" @click="onCloseClick">
           <div class="font-bold">X</div>
         </button>  
         <Voting :place="currentPlace" />
