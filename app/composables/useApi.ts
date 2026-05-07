@@ -119,6 +119,28 @@ export function useApi() {
     return response
   }
 
+  async function createPlace(place: {
+    name: string;
+    latitude: number;
+    longitude: number;
+    icon: string;
+    address: string;
+    description: string;
+    image: string;
+  }): Promise<Place> {
+    if (!user.value) throw "must be logged in";
+
+    const data = await $fetch<Place>(`/api/places`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${user.value.token}`,
+      },
+      body: place,
+    });
+
+    return data;
+  }
+
   return {
     register,
     requestLogin,
@@ -128,6 +150,7 @@ export function useApi() {
     fetchVisitedPlaces,
     fetchVotes,
     vote,
-    fetchBucketUrl
+    fetchBucketUrl,
+    createPlace
   };
 }

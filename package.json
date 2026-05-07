@@ -12,6 +12,7 @@
     "dbreset": "docker compose down -v && docker compose up -d --wait && pnpm migrate up"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1044.0",
     "@nuxt/eslint": "1.15.2",
     "@nuxt/icon": "2.2.1",
     "@tailwindcss/vite": "^4.2.2",
