@@ -4,6 +4,7 @@ const { currentPlace, setCurrentPlace } = useCurrentPlace();
 const place_image = computed(
   () => currentPlace.value?.image ?? "placeholder.svg",
 );
+const osm_link = computed(() => `https://www.openstreetmap.org/directions?to=${currentPlace.value?.latitude},${currentPlace.value?.longitude}`);
 
 function onCloseClick() {
   setCurrentPlace(null);
@@ -34,7 +35,7 @@ function onCloseClick() {
           <div class="font-bold">X</div>
         </button>  
         <Voting :place="currentPlace" />
-        <ExternalLink link="https://funeralhomefilms.de/blog/">
+        <ExternalLink :link="osm_link">
           <div class="aspect-square size-8 relative rounded-full shadow-lg bg-white cursor-pointer flex justify-center items-center">
             <Icon name="twemoji:compass" />
           </div>
