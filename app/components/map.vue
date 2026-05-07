@@ -14,6 +14,7 @@ const { places, fetch } = usePlaces();
 const map = useMap();
 const userLocation = useUserLocation();
 const { setCurrentPlace } = useCurrentPlace();
+const { finish } = useInitialLoad()
 
 provide("map", map);
 
@@ -58,6 +59,8 @@ onMounted(async () => {
       heading: map.value!.getBearing()!,
     };
   });
+
+  map.value.once("idle", () => finish());
 
   // fetch places initially
   fetch();
