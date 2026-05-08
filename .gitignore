@@ -78,3 +78,6 @@ playwright-report/
 .vercel
 .netlify
 .turbo
+/.vscode
+/.claude
+.vscode/settings.json
