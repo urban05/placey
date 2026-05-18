@@ -9,6 +9,7 @@ const showModal = ref(false);
 
 function logout() {
   user.value = null;
+  location.reload();
 }
 
 function onDocClick(e: any) {
@@ -47,7 +48,9 @@ onUnmounted(() => document.removeEventListener('click', onDocClick));
 
   <!-- Bar -->
   <section class="flex justify-between items-start">
-    <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow cursor-pointer"><Icon name="twemoji:back-arrow" size="25" @click="router.back()" /></button>
+    <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow cursor-pointer" @click="router.back()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 36 36"><path fill="#000" d="M29 14h-9V7L7 18l13 11v-7h9z"/></svg>
+    </button>
     <div class="self-center text-2xl font-bold">{{ props.title }}</div>
     <button class="flex justify-center items-center size-15 border border-gray-200 rounded-full shadow cursor-pointer" @click="showModal = true"><Icon name="twemoji:gear" size="30" /></button>
   </section>
