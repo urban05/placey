@@ -2,6 +2,7 @@
 import { FetchError } from "ofetch";
 
 const api = useApi();
+const user = useUser();
 const route = useRoute();
 const votes = useVotes();
 const visitedPlaces = useVisitedPlaces();
@@ -121,74 +122,82 @@ async function login() {
       backgroundSize: '2em 2em',
     }">
     <form class="w-full max-w-lg mx-auto p-8 bg-white rounded-lg shadow-xl overflow-hidden">
-      <NuxtLink to="/" class="text-xs">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 36 36"><path fill="#000" d="M29 14h-9V7L7 18l13 11v-7h9z"/></svg>
-      </NuxtLink>
-      <h2 class="text-center text-3xl font-extrabold">
-        {{ registerView ? "Register" : "Welcome Back" }}
-      </h2>
-      <section class="flex flex-col px-4 mt-8">
-        <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
-
-        <!-- login: otp -->
-        <template v-if="otpView && email !== ''">
-          <MsgBox type="info" class="mb-4">
-            Please enter the code we have send you to your email address.
-          </MsgBox>
-          <IconInput v-model="otp" icon-name="" placeholder="OTP token" @submit="login()" />
-          <button @click="login()" class="primaryButton" :disabled="loading">
-            {{ loading ? "..." : "Login" }}
-          </button>
-          <div class="mt-4">
-            Didn't worked?
-            <button v-if="otpSendAllow" class="secondaryButton" type="button" @click="requestLogin()">
-              Resend Code
-            </button>
-            <span v-else>Resend Code in
-              {{ Math.ceil((otpTimeout - otpSendedElapsed) / 1000) }}</span>
-          </div>
-        </template>
-
-        <template v-else>
-          <!-- login: register -->
-          <template v-if="registerView">
-            <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email"
-              type="email" />
-            <IconInput v-model="username" icon-name="twemoji:bust-in-silhouette" placeholder="Username"
-              @submit="register()" />
-            <button class="primaryButton" :disabled="loading" @click="register()">
-              {{ loading ? "..." : "Register" }}
+      <template v-if="user">
+        <div class="flex flex-col gap-4">
+          <MsgBox type="info" class="text-center">You are already logged in!</MsgBox>
+          <NuxtLink to="/" class="primaryButton self-center">To Homepage</NuxtLink>
+        </div>
+      </template>
+      <template v-else>
+        <NuxtLink to="/" class="text-xs">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 36 36"><path fill="#000" d="M29 14h-9V7L7 18l13 11v-7h9z"/></svg>
+        </NuxtLink>
+        <h2 class="text-center text-3xl font-extrabold">
+          {{ registerView ? "Register" : "Welcome Back" }}
+        </h2>
+        <section class="flex flex-col px-4 mt-8">
+          <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
+  
+          <!-- login: otp -->
+          <template v-if="otpView && email !== ''">
+            <MsgBox type="info" class="mb-4">
+              Please enter the code we have send you to your email address.
+            </MsgBox>
+            <IconInput v-model="otp" icon-name="" placeholder="OTP token" @submit="login()" />
+            <button @click="login()" class="primaryButton my-0.5" :disabled="loading">
+              {{ loading ? "..." : "Login" }}
             </button>
             <div class="mt-4">
-              Already have an account?
-              <button class="secondaryButton" @click="
-                registerView = false;
-              error = null;
-              ">
-                Login instead
+              Didn't worked?
+              <button v-if="otpSendAllow" class="secondaryButton" type="button" @click="requestLogin()">
+                Resend Code
               </button>
+              <span v-else>Resend Code in
+                {{ Math.ceil((otpTimeout - otpSendedElapsed) / 1000) }}</span>
             </div>
           </template>
-
-          <!-- login: login -->
+  
           <template v-else>
-            <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email"
-              type="email" @submit="requestLogin()" autofocus />
-            <button class="primaryButton" :disabled="loading" @click="requestLogin()">
-              {{ loading ? "..." : "Request Code" }}
-            </button>
-            <div class="mt-4">
-              New here?
-              <button class="secondaryButton" @click="
-                registerView = true;
-              error = null;
-              ">
-                Register
+            <!-- login: register -->
+            <template v-if="registerView">
+              <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email"
+                type="email" />
+              <IconInput v-model="username" icon-name="twemoji:bust-in-silhouette" placeholder="Username"
+                @submit="register()" />
+              <button class="primaryButton my-0.5" :disabled="loading" @click="register()">
+                {{ loading ? "..." : "Register" }}
               </button>
-            </div>
+              <div class="mt-4">
+                Already have an account?
+                <button class="secondaryButton" @click="
+                  registerView = false;
+                error = null;
+                ">
+                  Login instead
+                </button>
+              </div>
+            </template>
+  
+            <!-- login: login -->
+            <template v-else>
+              <IconInput v-model="email" icon-name="twemoji:envelope" placeholder="E-Mail" autocomplete="email"
+                type="email" @submit="requestLogin()" autofocus />
+              <button class="primaryButton my-0.5" :disabled="loading" @click="requestLogin()">
+                {{ loading ? "..." : "Request Code" }}
+              </button>
+              <div class="mt-4">
+                New here?
+                <button class="secondaryButton" @click="
+                  registerView = true;
+                error = null;
+                ">
+                  Register
+                </button>
+              </div>
+            </template>
           </template>
-        </template>
-      </section>
+        </section>
+      </template>
     </form>
     <ul class="fixed w-full text-center bottom-2 p-4">
       <li>versatiles for vector tiles</li>
@@ -202,7 +211,6 @@ button {
   cursor: pointer;
 }
 .primaryButton {
-  margin-block: 0.5em;
   background-color: var(--color-indigo-500);
   border-style: var(--tw-border-style);
   border-width: 1px;
