@@ -87,13 +87,13 @@ async function onContribute() {
           class="absolute right-2 top-1/2 -translate-y-1/2 grayscale pointer-events-none" size="24" />
       </div>
       <div class="grow grid grid-cols-[repeat(auto-fit,minmax(42px,1fr))] gap-2 min-h-0 overflow-y-scroll overflow-x-hidden">
-        <Icon v-for="icon in icons" :name="`twemoji:${icon.item}`" size="42" @click="iconName = `twemoji:${icon.item}`" class="cursor-pointer" />
+        <Icon v-for="icon in icons" :name="`twemoji:${icon.item}`" size="42" @click="iconName = `twemoji:${icon.item}`" class="cursor-pointer" :title="icon.item" />
       </div>
     </div>
-    <div class="border border-gray-700 rounded-md p-2 relative">
+    <div class="border border-gray-700 rounded-md p-2 relative text-center">
       <input @change="onFileChange" type="file" accept="image/png, image/gif, image/jpeg, image/webp" class="absolute size-full top-0 left-0 opacity-0">
       <span v-if="!image">Select an image</span>
-      <img v-else :src="image" />
+      <img v-else :src="image" class="mx-auto" />
     </div>
   </div>
 </template>

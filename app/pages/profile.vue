@@ -53,17 +53,18 @@ const filteredPlaces = computed(() =>
           class="relative flex justify-center items-center border border-gray-300 aspect-square overflow-hidden"
         >
           <Icon :name="place.icon" size="50" />
-          <img
-            :src="place.image ?? 'placeholder.svg'"
-            class="absolute size-full object-cover object-center opacity-50 -z-1"
+          <BucketImage
+            v-if="place.image"
+            :src="place.image"
+            class="absolute size-full object-cover object-center opacity-50 -z-1 blur-xs"
           />
-          <div class="absolute bottom-0 w-full text-xs">{{ place.name }}</div>
+          <div class="absolute bottom-0 w-full text-sm text-center p-2">
+            {{ place.name }}
+          </div>
         </div>
       </div>
     </section>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
