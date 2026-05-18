@@ -9,6 +9,7 @@ const showModal = ref(false);
 
 function logout() {
   user.value = null;
+  location.reload();
 }
 
 function onDocClick(e: any) {

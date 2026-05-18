@@ -1,13 +1,15 @@
+<script lang="ts" setup>
+definePageMeta({
+  middleware: ["login"],
+});
+</script>
+
 <template>
   <div class="p-4">
     <NonIndexHeader title="Settings" />
     Settings
-  </div>
+  </div>    
 </template>
-
-<script lang="ts" setup>
-
-</script>
 
 <style>
 
