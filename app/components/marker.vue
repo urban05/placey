@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import maplibregl from "maplibre-gl";
+import type { ShallowRef } from "vue";
+
+const props = defineProps<{
+  lngLat: [number, number];
+  icon: string;
+  isShiny: boolean;
+}>();
+
+const map = inject("map") as ShallowRef<maplibregl.Map>;
+
+let marker: maplibregl.Marker | null = null;
+const el = ref<HTMLDivElement | null>(null);
+
+function registerMarker() {
+  if (!map.value || !el.value) return;
+
+  zoom.value = map.value.getZoom()!;
+  map.value.on("zoom", () => {
+    zoom.value = map.value.getZoom()!;
+  });
+
+  marker = new maplibregl.Marker({
+    element: el.value,
+    anchor: "bottom",
+  })
+    .setLngLat(props.lngLat)
+    .addTo(map.value);
+}
+
+// register initially
+onMounted(registerMarker);
+
+// reregister if map changes
+watch(map, registerMarker)
+
+
+// react to position updates
+watch(
+  () => props.lngLat,
+  (val) => {
+    marker?.setLngLat(val);
+  },
+);
+
+onBeforeUnmount(() => {
+  marker?.remove();
+});
+
+const zoom = ref(0);
+const size = computed(() => 40 * Math.pow(1.2, zoom.value - 13));
+</script>
+
+<template>
+  <div ref="el" class="drop-shadow-xl drop-shadow-black/60">
+    <div
+      class="border-x-8 border-x-transparent border-t-12 border-t-black/40 absolute bottom-0 left-1/2 -translate-x-1/2">
+    </div>
+    <Icon :size="size" :name="icon" class="-translate-y-2" :style="isShiny ? 'filter: url(\'#shimmer\')' : ''" />
+  </div>
+</template>

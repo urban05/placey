@@ -1,0 +1,17 @@
+
+POST http://localhost:3000/api/places HTTP/1.1
+content-type: application/json
+
+{
+    "name": "test",
+    "cords": {
+        "latitude": 0,
+        "longlitude": 0
+    },
+    "icon": "a",
+    "verified": false
+}
+
+###
+
+GET http://localhost:3000/api/places?latitude=10.003277&longlitude=53.499555 HTTP/1.1
