@@ -80,7 +80,7 @@ const subline = computed(() =>
         -->
         <div class="relative shrink-0 w-14 h-14 sm:w-[68px] sm:h-[68px]" aria-label="App logo">
           <div class="ep-logo-img-frame">
-            <img src="/assets/placey-sad.webp" class="aspect-square" />
+            <img src="/assets/placey-dead.webp" class="aspect-square" />
           </div>
           <!-- decorative ring pulse -->
           <span class="ep-logo-pulse" aria-hidden="true" />
