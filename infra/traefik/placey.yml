@@ -6,6 +6,7 @@ http:
         - websecure
       service: placey-app
       tls: {}
+      priority: 1
 
     placey-webhook:
       rule: "Host(`placey.eu`) && PathPrefix(`/hooks/`)"
@@ -13,6 +14,23 @@ http:
         - websecure
       service: placey-webhook
       tls: {}
+      priority: 10
+
+    placey-bucket:
+      rule: "Host(`placey.eu`) && PathPrefix(`/bucket/`)"
+      entryPoints:
+        - websecure
+      service: placey-bucket
+      middlewares:
+        - strip-bucket-prefix
+      tls: {}
+      priority: 10
+
+  middlewares:
+    strip-bucket-prefix:
+      stripPrefix:
+        prefixes:
+          - "/bucket"
 
   services:
     placey-app:
@@ -24,3 +42,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://10.0.42.2:9100"
+
+    placey-bucket:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.42.2:9000"
