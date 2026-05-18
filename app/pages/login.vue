@@ -122,7 +122,7 @@ async function login() {
     }">
     <form class="w-full max-w-lg mx-auto p-8 bg-white rounded-lg shadow-xl overflow-hidden">
       <NuxtLink to="/" class="text-xs">
-        <Icon name="twemoji:back-arrow" size="25" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 36 36"><path fill="#000" d="M29 14h-9V7L7 18l13 11v-7h9z"/></svg>
       </NuxtLink>
       <h2 class="text-center text-3xl font-extrabold">
         {{ registerView ? "Register" : "Welcome Back" }}
