@@ -1,0 +1,26 @@
+http:
+  routers:
+    placey-app:
+      rule: "Host(`placey.eu`) || Host(`www.placey.eu`)"
+      entryPoints:
+        - websecure
+      service: placey-app
+      tls: {}
+
+    placey-webhook:
+      rule: "Host(`placey.eu`) && PathPrefix(`/hooks/`)"
+      entryPoints:
+        - websecure
+      service: placey-webhook
+      tls: {}
+
+  services:
+    placey-app:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.42.2:3000"
+
+    placey-webhook:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.42.2:9100"
