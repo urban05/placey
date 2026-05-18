@@ -5,6 +5,7 @@ definePageMeta({
 
 const user = useUser();
 const visitedPlaces = useVisitedPlaces();
+const { setCurrentPlace } = useCurrentPlace();
 
 const placeSearch = ref("");
 
@@ -48,9 +49,11 @@ const filteredPlaces = computed(() =>
         />
       </div>
       <div class="grow grid grid-cols-4 content-start gap-2">
-        <div
+        <NuxtLink
           v-for="place in filteredPlaces"
+          to="/"
           class="relative flex justify-center items-center border border-gray-300 aspect-square overflow-hidden"
+          @click="setCurrentPlace(place.id)"
         >
           <Icon :name="place.icon" size="50" />
           <BucketImage
@@ -61,7 +64,7 @@ const filteredPlaces = computed(() =>
           <div class="absolute bottom-0 w-full text-sm text-center p-2">
             {{ place.name }}
           </div>
-        </div>
+        </NuxtLink>
       </div>
     </section>
   </div>
