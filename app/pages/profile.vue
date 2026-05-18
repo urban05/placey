@@ -6,7 +6,6 @@ const api = useApi();
 const user = useUser();
 const votes = useVotes();
 const visitedPlaces = useVisitedPlaces();
-const places = ref<Place[] | null>(null);
 
 const loading = ref(false);
 const registerView = ref(false);
@@ -27,12 +26,8 @@ const otpSendAllow = computed(() => otpSendedElapsed.value > otpTimeout);
 
 const placeSearch = ref("");
 
-onMounted(async () => {
-  places.value = await visitedPlaces.getPlaces();
-});
-
 const filteredPlaces = computed(() =>
-  places.value?.filter(
+  visitedPlaces.visitedPlaces.value.filter(
     (v, _) =>
       v.name.toLowerCase().includes(placeSearch.value.toLowerCase()) ?? [],
   ),
@@ -100,7 +95,11 @@ async function login() {
     loading.value = true;
     error.value = null;
     await api.login(email.value, otp.value);
+
+    // TODO: this needs to be handles better!
     votes.fetch();
+    visitedPlaces.fetchPlaces();
+
     loading.value = false;
     otpView.value = false;
     registerView.value = false;
@@ -177,7 +176,9 @@ async function login() {
     <form
       class="w-full max-w-lg mx-auto p-8 bg-white rounded-lg shadow-xl overflow-hidden"
     >
-      <NuxtLink to="/" class="text-xs">Back to home</NuxtLink>
+      <NuxtLink to="/" class="text-xs"
+        ><Icon name="twemoji:back-arrow" size="25"
+      /></NuxtLink>
       <h2 class="text-center text-3xl font-extrabold">
         {{ registerView ? "Register" : "Welcome Back" }}
       </h2>

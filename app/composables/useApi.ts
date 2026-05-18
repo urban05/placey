@@ -58,8 +58,14 @@ export function useApi() {
   }
 
   // query places by visited uuids array
-  async function fetchVisitedPlaces(places: UUID[]): Promise<Place[]> {
-    const data = await $fetch<Place[]>("/api/places/visited", { method: "POST", body: { visited: places } });
+  async function fetchVisitedPlaces(): Promise<Place[]> {
+    if (!user.value) throw "must be logged in";
+
+    const data = await $fetch<Place[]>("/api/places/visited", {
+      method: "GET", headers: {
+        authorization: `Bearer ${user.value?.token}`,
+      },
+    });
     return data;
   };
 
@@ -103,6 +109,38 @@ export function useApi() {
     });
   }
 
+  // gets the objectstorage bucket url
+  async function fetchBucketUrl(): Promise<string> {
+    const response = await $fetch(`/api/bucket`, {
+      method: "GET"
+    });
+
+    if (!response) throw "error fetching bucket url";
+    return response
+  }
+
+  async function createPlace(place: {
+    name: string;
+    latitude: number;
+    longitude: number;
+    icon: string;
+    address: string;
+    description: string;
+    image: string;
+  }): Promise<Place> {
+    if (!user.value) throw "must be logged in";
+
+    const data = await $fetch<Place>(`/api/places`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${user.value.token}`,
+      },
+      body: place,
+    });
+
+    return data;
+  }
+
   return {
     register,
     requestLogin,
@@ -112,5 +150,7 @@ export function useApi() {
     fetchVisitedPlaces,
     fetchVotes,
     vote,
+    fetchBucketUrl,
+    createPlace
   };
 }

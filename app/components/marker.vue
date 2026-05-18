@@ -13,7 +13,7 @@ const map = inject("map") as ShallowRef<maplibregl.Map>;
 let marker: maplibregl.Marker | null = null;
 const el = ref<HTMLDivElement | null>(null);
 
-onMounted(() => {
+function registerMarker() {
   if (!map.value || !el.value) return;
 
   zoom.value = map.value.getZoom()!;
@@ -27,7 +27,14 @@ onMounted(() => {
   })
     .setLngLat(props.lngLat)
     .addTo(map.value);
-});
+}
+
+// register initially
+onMounted(registerMarker);
+
+// reregister if map changes
+watch(map, registerMarker)
+
 
 // react to position updates
 watch(
@@ -48,13 +55,8 @@ const size = computed(() => 40 * Math.pow(1.2, zoom.value - 13));
 <template>
   <div ref="el" class="drop-shadow-xl drop-shadow-black/60">
     <div
-      class="border-x-8 border-x-transparent border-t-12 border-t-black/40 absolute bottom-0 left-1/2 -translate-x-1/2"
-    ></div>
-    <Icon
-      :size="size"
-      :name="icon"
-      class="-translate-y-2"
-      :style="isShiny ? 'filter: url(\'#shimmer\')' : ''"
-    />
+      class="border-x-8 border-x-transparent border-t-12 border-t-black/40 absolute bottom-0 left-1/2 -translate-x-1/2">
+    </div>
+    <Icon :size="size" :name="icon" class="-translate-y-2" :style="isShiny ? 'filter: url(\'#shimmer\')' : ''" />
   </div>
 </template>
