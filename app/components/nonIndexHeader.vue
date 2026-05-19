@@ -39,11 +39,15 @@ onUnmounted(() => document.removeEventListener('click', onDocClick));
     <NuxtLink to="/contribute" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
       <Icon name="twemoji:plus" class="size-5" />
       <div class="font-semibold">Contribute</div>
-    </NuxtLink>  
+    </NuxtLink>
+    <NuxtLink to="/impressum" class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]">
+      <Icon name="twemoji:information" class="size-5" />
+      <div class="font-semibold">Impressum</div>
+    </NuxtLink>
     <button class="flex gap-3 items-center p-2 rounded-md cursor-pointer text-[#141414] active:scale-[99%]" @click="logout()">
       <Icon name="twemoji:ladder" class="size-5" />
       <div class="font-semibold">Log out</div>
-    </button>  
+    </button>
   </div>  
 
   <!-- Bar -->

@@ -264,6 +264,7 @@ async function login() {
     <ul class="fixed w-full text-center bottom-2 p-4">
       <li>versatiles for vector tiles</li>
       <li>iconify/glyphs-twemoji for icons, CC-BY 4.0</li>
+      <li><NuxtLink to="/impressum">Impressum</NuxtLink></li>
     </ul>
   </div>
 </template>
