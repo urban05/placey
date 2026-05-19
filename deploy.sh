@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Load nvm so the webhook (non-login shell) gets the correct Node version
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 cd /opt/placey
 
 # Pull latest code
