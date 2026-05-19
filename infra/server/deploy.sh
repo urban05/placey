@@ -1,13 +1,17 @@
 #!/bin/bash
 set -e
 
+# Load nvm for the placey user (non-login shell)
+export NVM_DIR="/home/placey/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 cd /opt/placey
 
 # Pull latest code
 git pull origin main
 
-# Start docker services
-docker compose up -d
+# Start minio services (skip db - managed separately)
+docker compose up -d minio minio-init
 
 # Install dependencies
 pnpm install --frozen-lockfile
@@ -15,7 +19,7 @@ pnpm install --frozen-lockfile
 # Build Nuxt app
 pnpm build
 
-# Restart the app via pm2 (creates it on first run, restarts on subsequent)
+# Restart the app via pm2 (creates on first run, restarts on subsequent)
 pm2 describe placey > /dev/null 2>&1 \
   && pm2 restart placey \
   || pm2 start .output/server/index.mjs \
