@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <Transition name="fade">
-    <div v-if="isLoading" class="fixed t-0 l-0 w-screen h-screen z-1000 flex justify-center items-center bg-white">
+    <div v-if="isLoading" class="fixed t-0 l-0 w-dvw h-dvh z-1000 flex justify-center items-center bg-white">
       <div class="spinner" />
       <!-- <img src="/loading.gif" class="size-50" /> -->
     </div>

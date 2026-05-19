@@ -66,7 +66,7 @@ const subline = computed(() =>
     </span>
 
     <!-- ── Page shell ──────────────────────────────────────────── -->
-    <div class="relative z-10 w-[min(680px,92vw)] flex flex-col items-center gap-8 pt-10 pb-2 min-h-screen">
+    <div class="relative z-10 w-[min(680px,92dvw)] flex flex-col items-center gap-8 pt-10 pb-2 min-h-dvh">
 
       <!-- ── Header row: logo + app name ──────────────────────── -->
       <header class="ep-header gap-3 sm:gap-4">
@@ -105,10 +105,10 @@ const subline = computed(() =>
         </div>
 
         <!-- Copy -->
-        <h1 class="[font-family:var(--f-display)] text-[clamp(1.85rem,5.5vw,2.65rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-(--ep-cream) max-w-[520px]">
+        <h1 class="[font-family:var(--f-display)] text-[clamp(1.85rem,5.5dvw,2.65rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-(--ep-cream) max-w-[520px]">
           {{ headline }}&nbsp;<Icon name="twemoji:world-map" class="inline-block w-[0.9em] h-[0.9em] align-[-0.1em]" />
         </h1>
-        <p class="text-[clamp(0.88rem,2.2vw,1rem)] font-medium leading-[1.65] text-(--ep-muted) max-w-[440px]">{{ subline }}</p>
+        <p class="text-[clamp(0.88rem,2.2dvw,1rem)] font-medium leading-[1.65] text-(--ep-muted) max-w-[440px]">{{ subline }}</p>
 
         <!-- Actions -->
         <div class="flex flex-wrap gap-3 justify-center mt-2">

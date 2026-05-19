@@ -19,7 +19,7 @@ const filteredPlaces = computed(() =>
 
 <template @click="showModal = false">
   <!-- main -->
-  <div v-if="user" class="w-screen h-screen p-4 flex flex-col">
+  <div v-if="user" class="w-dvw h-dvh p-4 flex flex-col">
     <NonIndexHeader title="Profile" />
     <section class="flex gap-8 px-4 py-12 items-stretch">
       <img

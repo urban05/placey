@@ -4,7 +4,7 @@ const atag = useTemplateRef("atag")
 </script>
 
 <template>
-  <div v-if="showing" class="fixed t-0 l-0 w-screen h-screen flex justify-center items-center bg-[#0006] z-1000" @click="hide()">
+  <div v-if="showing" class="fixed t-0 l-0 w-dvw h-dvh flex justify-center items-center bg-[#0006] z-1000" @click="hide()">
     <div class="w-3/4 max-w-lg p-4 text-center bg-white rounded-lg shadow flex flex-col gap-8" @click="(e) => e.stopPropagation()">
       <div class="text-3xl font-bold">External Page</div>
       <a ref="atag" :href="link" target="_blank" class="text-lg flex justify-center items-center gap-4" @click="hide()">

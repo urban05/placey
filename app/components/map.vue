@@ -7,7 +7,7 @@ const { topMargin = 10, bottomMargin = 0 } = defineProps<{
   topMargin?: number;
   bottomMargin?: number;
 }>();
-const bottomMarginComputed = computed(() => `calc(${bottomMargin}vh + 1em)`);
+const bottomMarginComputed = computed(() => `calc(${bottomMargin}dvh + 1em)`);
 const topMarginComputed = computed(() => `${topMargin}px`);
 
 const { places, fetch } = usePlaces();
@@ -129,7 +129,7 @@ watch(
 <style scoped>
 :deep(.maplibregl-ctrl-group) {
   margin-top: v-bind("topMarginComputed") !important;
-  border-radius: 50vh !important;
+  border-radius: 50dvh !important;
   overflow: hidden !important;
 }
 

@@ -1,14 +1,14 @@
 <template>
   <div>
     <Map
-      class="fixed top-0 h-screen"
+      class="fixed top-0 h-dvh"
       :top-margin="100"
       :bottom-margin="drawerDefaultCoverage"
     />
 
     <Navbar class="fixed top-0 w-full" />
 
-    <!-- <div class="fixed bottom-0 left-0 w-screen bg-white duration-300" :style="`height: ${drawerDefaultCoverage}%`" /> -->
+    <!-- <div class="fixed bottom-0 left-0 w-dvw bg-white duration-300" :style="`height: ${drawerDefaultCoverage}%`" /> -->
     <Drawer :default-size="drawerDefaultCoverage">
       <PlaceList v-if="currentPlace === null" />
       <PlaceInfo v-else />

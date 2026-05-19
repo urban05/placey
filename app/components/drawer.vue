@@ -19,9 +19,9 @@ const dragStartY = ref(0);
 const dragStartHeight = ref(0);
 
 const drawerStyle = computed(() => ({
-  height: `${currentHeight.value}vh`,
+  height: `${currentHeight.value}dvh`,
   '--drawer-height': currentHeight.value,
-  paddingTop: 'max(calc(var(--drawer-height) * 1vh - 100vh + 4rem), 0px)',
+  paddingTop: 'max(calc(var(--drawer-height) * 1dvh - 100dvh + 4rem), 0px)',
   borderRadius: isFullscreen.value ? '0' : '16px'
 }));
 
