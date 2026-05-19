@@ -173,17 +173,17 @@ async function login() {
               {{ loading ? "..." : "Login" }}
             </button>
             <div class="mt-4">
-              Didn't worked?
+              Didn't work?
               <button
                 v-if="otpSendAllow"
                 class="secondaryButton"
                 type="button"
                 @click="requestLogin()"
               >
-                Resend Code
+                Resend code
               </button>
               <span v-else
-                >Resend Code in
+                >Resend code in
                 {{ Math.ceil((otpTimeout - otpSendedElapsed) / 1000) }}</span
               >
             </div>
