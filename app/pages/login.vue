@@ -138,19 +138,21 @@ async function login() {
         </div>
       </template>
       <template v-else>
-        <NuxtLink to="/" class="text-xs">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            viewBox="0 0 36 36"
-          >
-            <path fill="#000" d="M29 14h-9V7L7 18l13 11v-7h9z" />
-          </svg>
-        </NuxtLink>
-        <h2 class="text-center text-3xl font-extrabold">
-          {{ registerView ? "Register" : "Welcome Back" }}
-        </h2>
+        <section class="flex">
+          <NuxtLink to="/" class="text-xs">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              viewBox="0 0 36 36"
+            >
+              <path fill="#000" d="M29 14h-9V7L7 18l13 11v-7h9z" />
+            </svg>
+          </NuxtLink>
+          <h2 class="grow text-center text-3xl font-extrabold">
+            {{ registerView ? "Register" : "Welcome Back" }}
+          </h2>
+        </section>
         <section class="flex flex-col px-4 mt-8">
           <MsgBox v-if="error" type="error" class="mb-4">{{ error }}</MsgBox>
 
