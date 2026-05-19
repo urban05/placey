@@ -3,11 +3,14 @@ definePageMeta({
   middleware: ["login"],
 });
 
+import compliments from "@/assets/compliments.json";
+
 const user = useUser();
 const visitedPlaces = useVisitedPlaces();
 const { setCurrentPlace } = useCurrentPlace();
 
 const placeSearch = ref("");
+const compliment = ref("");
 
 const filteredPlaces = computed(() =>
   visitedPlaces.visitedPlaces.value.filter(
@@ -15,6 +18,11 @@ const filteredPlaces = computed(() =>
       v.name.toLowerCase().includes(placeSearch.value.toLowerCase()) ?? [],
   ),
 );
+
+onMounted(() => {
+  visitedPlaces.fetchPlaces();
+  compliment.value = compliments[Math.round(Math.random() * compliments.length)] ?? "";
+});
 </script>
 
 <template @click="showModal = false">
@@ -28,9 +36,9 @@ const filteredPlaces = computed(() =>
       />
       <div class="grow flex flex-col items-center">
         <div class="grow flex justify-center items-center text-5xl font-bold">
-          16
+          {{ visitedPlaces.visitedPlaces.value.length }}
         </div>
-        <p>Du bist der Allerbeste!</p>
+        <p>{{ compliment }}</p>
       </div>
     </section>
     <section class="grow flex flex-col gap-4">
