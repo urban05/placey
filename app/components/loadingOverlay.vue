@@ -1,14 +1,16 @@
 <!-- components/LoadingOverlay.vue -->
 <script setup lang="ts">
-const { isLoading, finish } = useInitialLoad()
+const { isLoading, watchTailwind, finishMap } = useInitialLoad()
 const route = useRoute();
 
 onMounted(() => {
+  watchTailwind();
+
   if (["/", "/contribute"].includes(route.path)) {
-    setTimeout(finish, 3000);
+    setTimeout(finishMap, 3000);
   }
   else {
-    finish();
+    finishMap();
   }
 })
 </script>
