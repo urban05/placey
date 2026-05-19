@@ -38,7 +38,7 @@ Placey turns exploring your neighborhood into a game. Check in at places to coll
 | Frontend | [Vue 3](https://vuejs.org/) + [Nuxt 4](https://nuxt.com/) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com/) |
 | Map | [MapLibre GL](https://maplibre.org/) + [VersaTiles](https://versatiles.org/) (OpenStreetMap) |
-| Icons | [Twemoji](https://twemoji.twitter.com/) via `@iconify-json/twemoji` |
+| Icons | [Twemoji](https://github.com/jdecked/twemoji) via `@iconify-json/twemoji` |
 | Server | Nuxt Nitro |
 | Database | [PostgreSQL](https://www.postgresql.org/) + [PostGIS](https://postgis.net/) |
 | Migrations | [node-pg-migrate](https://github.com/salsita/node-pg-migrate) |
@@ -59,8 +59,8 @@ Placey turns exploring your neighborhood into a game. Check in at places to coll
 # Install dependencies
 pnpm install
 
-# Run database migrations
-pnpm migrate
+# Run database migrations and seed test data
+pnpm migrate up
 
 # Start development server
 pnpm dev
@@ -76,7 +76,12 @@ Create a `.env` file in the project root:
 DATABASE_URL=postgres://user:password@localhost:5432/placey
 TOKEN_SECRET=[a random string for JWT signing]
 ```
-You can get a random string for `TOKEN_SECRET` using [this](https://www.convertsimple.com/random-base64-generator/) or any other way you might know.
+
+You can generate a random string for `TOKEN_SECRET` with:
+
+```bash
+openssl rand -base64 32
+```
 
 ### Docker Compose
 
@@ -126,9 +131,9 @@ Placey is open-source and community-driven — contributions are welcome.
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/your-feature`)
 3. Commit your changes
-4. Open a pull request
+4. Open a pull request **against `staging`** (not `main`)
 
-Please keep entries accurate, inclusive, and respectful of the community this project serves.
+Please run `pnpm lint` before opening a PR and keep entries accurate, inclusive, and respectful of the community this project serves.
 
 ---
 
