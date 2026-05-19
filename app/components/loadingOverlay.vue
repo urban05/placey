@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <Transition name="fade">
-    <div v-if="isLoading" class="fixed t-0 l-0 w-dvw h-dvh z-1000 flex justify-center items-center bg-white">
+    <div v-if="isLoading" class="spinner-container">
       <div class="spinner" />
       <!-- <img src="/loading.gif" class="size-50" /> -->
     </div>
@@ -23,7 +23,18 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
 .spinner {
   width: 40px;
   height: 40px;
